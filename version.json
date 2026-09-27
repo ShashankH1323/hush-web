@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "name": "Hush 1.0.0",
+  "release_date": "2026-09-27",
+  "download_url": "https://hush-web-alpha.vercel.app/downloads/Hush_1.0.0_x64-setup.exe",
+  "msi_url": "https://hush-web-alpha.vercel.app/downloads/Hush_1.0.0_x64_en-US.msi",
+  "website_url": "https://hush-web-alpha.vercel.app",
+  "notes": "Hush 1.0.0 — Fast Whisper Turbo speech-to-text, floating pill bar, and AI reform."
+}
