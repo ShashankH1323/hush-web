@@ -1,0 +1,71 @@
+<!-- STATS (§V2-C) — day-by-day contribution graph, headline metrics, and a weekly line.
+     Fragment only (no html/head/body). Root <section id="stats" class="section stats"> on
+     --fog, using the WIDE container to fill big screens. Inserts AFTER Features, BEFORE Download.
+     app.js fills [data-contrib-grid], counts up [data-count] nums, and draws [data-usageline]. -->
+<section id="stats" class="section stats">
+  <div class="wrap wrap--wide">
+
+    <!-- Intro (kept at a comfortable reading measure) -->
+    <div class="stats__intro reveal">
+      <p class="eyebrow">Your numbers</p>
+      <h2 class="h stats__title">Watch your voice add up.</h2>
+      <p class="lead stats__lead">Every dictation is a little less typing. Here&rsquo;s a year of it &mdash; the days you spoke, the words that landed, and the hours you got back.</p>
+    </div>
+
+    <div class="stats__stack">
+
+      <!-- Contribution graph — the day-by-day part. [data-contrib-grid] is filled by app.js. -->
+      <div class="card contrib-card reveal">
+        <div class="contrib-card__head">
+          <h3 class="contrib-card__title"><span class="contrib-card__num">486,000</span> words this year</h3>
+          <p class="contrib-card__sub">Each square is a day. Brighter means more words.</p>
+        </div>
+        <div class="contrib" data-contrib><div class="contrib__grid" data-contrib-grid></div><div class="contrib__legend">Less <span data-level="0"></span><span data-level="1"></span><span data-level="2"></span><span data-level="3"></span><span data-level="4"></span> More</div></div>
+      </div>
+
+      <!-- Headline metrics (count up 0 → value on view; static text is the no-JS fallback) -->
+      <div class="stat-tiles reveal">
+        <div class="stat-tile">
+          <span class="stat-tile__num" data-count="486000">486,000</span>
+          <span class="stat-tile__label">Total words</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile__num" data-count="128">128</span>
+          <span class="stat-tile__label">Day streak</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile__num" data-count="138">138</span>
+          <span class="stat-tile__label">Words / min</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile__num" data-count="94">94</span>
+          <span class="stat-tile__label">Hours saved</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile__num" data-count="2940">2,940</span>
+          <span class="stat-tile__label">Sessions</span>
+        </div>
+      </div>
+
+      <!-- Words per week — app.js draws the path + area into [data-usageline]. -->
+      <div class="card usage-card reveal">
+        <div class="usage-card__head">
+          <h3 class="usage-card__title">Words per week</h3>
+          <p class="usage-card__sub">Fifty-two weeks of dictation, week over week.</p>
+        </div>
+        <div class="usage-card__plot">
+          <svg class="usageline" data-usageline viewBox="0 0 720 220" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="usagefill" x1="0" y1="0" x2="0" y2="1">
+                <stop class="usagefill__top" offset="0"></stop>
+                <stop class="usagefill__bot" offset="1"></stop>
+              </linearGradient>
+            </defs>
+            <line class="usageline__base" x1="0" y1="212" x2="720" y2="212"></line>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

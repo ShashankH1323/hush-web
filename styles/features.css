@@ -1,0 +1,179 @@
+/* ============================================================
+   FEATURES — three reasons, editorial alternating 2-col rows.
+   Owns: .features, .feature-row*, .cleanup*, .anyapp*,
+   .privacy*, .modeswitch*. Never styles .hush-* or .artifact.
+   ============================================================ */
+
+.features{ background:var(--fog); }
+
+/* Intro */
+.features__intro{ max-width:640px; }
+.features__title{ margin:14px 0 0; max-width:16ch; }
+
+/* Rows: alternating text / artifact */
+.features__rows{
+  display:flex; flex-direction:column;
+  gap:clamp(56px,9vw,112px);
+  margin-top:clamp(48px,7vw,88px);
+}
+.feature-row{
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:clamp(32px,6vw,80px); align-items:center;
+}
+.feature-row__text{ order:1; }
+.feature-row__art{ order:2; display:flex; justify-content:center; }
+.feature-row--flip .feature-row__text{ order:2; }
+.feature-row--flip .feature-row__art{ order:1; }
+
+/* Text column */
+.feature-row__num{
+  margin:0; font:400 var(--t-cap)/1 var(--serif);
+  color:var(--ash); letter-spacing:.04em;
+  display:inline-flex; align-items:center; gap:10px;
+}
+.feature-row__num::after{
+  content:""; width:34px; height:1px; background:var(--border);
+}
+.feature-row__title{
+  margin:16px 0 14px;
+  font:400 clamp(26px,3.3vw,34px)/1.14 var(--serif);
+  letter-spacing:-.02em; color:var(--ink);
+}
+.feature-row__body{
+  margin:0; max-width:44ch;
+  font-size:var(--t-body-lg); line-height:1.55; color:var(--slate);
+}
+
+/* Constrain the artifact wrappers so they read as cropped screenshots */
+.cleanup,.anyapp,.privacy{ width:100%; }
+.cleanup{ max-width:400px; }
+.anyapp{ max-width:420px; }
+.privacy{ max-width:360px; }
+
+/* ---- 1 · Writes the way you would (raw -> polished) ---- */
+.cleanup{ display:flex; flex-direction:column; align-items:stretch; }
+.cleanup__raw{
+  background:var(--mist); border-radius:var(--r-sm); padding:16px 18px;
+}
+.cleanup__label{
+  display:block; margin-bottom:8px;
+  font:500 var(--t-small)/1 var(--sans);
+  letter-spacing:.08em; text-transform:uppercase; color:var(--slate);
+}
+.cleanup__rawtext{
+  margin:0; font-size:var(--t-cap); line-height:1.5;
+  color:var(--slate); font-style:italic;
+}
+.cleanup__flow{
+  display:flex; flex-direction:column; align-items:center;
+  gap:6px; padding:10px 0;
+}
+.cleanup__line{ width:1px; height:14px; background:var(--border); }
+.cleanup__node{
+  display:grid; place-items:center; width:30px; height:30px;
+  border-radius:var(--r-pill); background:var(--paper);
+  color:var(--slate); outline:1px solid var(--border);
+}
+.cleanup__node svg{ transform:rotate(90deg); }
+.cleanup__out{ align-self:stretch; padding:14px 16px; }
+
+/* ---- 2 · Works in every window (shortcut -> any app) ---- */
+.anyapp{ padding:18px; display:flex; flex-direction:column; gap:16px; }
+.anyapp__press{ display:flex; align-items:center; gap:10px; }
+.anyapp__hint{ font:400 var(--t-small)/1 var(--sans); color:var(--slate); }
+.anyapp__grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.anyapp__win{
+  min-width:0; padding:9px 11px; border-radius:12px;
+  background:var(--mist); border:1px solid var(--border);
+}
+.anyapp__win--active{
+  background:var(--hush-accent-weak); border-color:var(--hush-accent-weak);
+}
+.anyapp__bar{
+  display:flex; align-items:center; gap:6px; margin-bottom:8px;
+  font:500 var(--t-small)/1 var(--sans); color:var(--slate);
+}
+.anyapp__dot{
+  flex:none; width:7px; height:7px;
+  border-radius:var(--r-pill); background:var(--smoke);
+}
+.anyapp__win--active .anyapp__dot{ background:var(--hush-accent); }
+.anyapp__body{
+  font:400 var(--t-small)/1.3 var(--sans); color:var(--ink);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.anyapp__prompt{ color:var(--hush-accent); margin-right:2px; }
+.anyapp__caret{
+  display:inline-block; width:2px; height:1em; margin-left:1px;
+  vertical-align:-2px; background:var(--hush-accent);
+  animation:featCaret 1.1s step-end infinite;
+}
+.anyapp__win:not(.anyapp__win--active) .anyapp__caret{ background:var(--smoke); }
+@keyframes featCaret{ 0%,60%{opacity:1} 61%,100%{opacity:0} }
+
+/* ---- 3 · Fast, and private when you want ---- */
+.privacy{
+  display:flex; flex-direction:column; align-items:center;
+  gap:20px; text-align:center;
+}
+.privacy__statcard{ display:inline-block; padding:14px 16px; }
+.privacy__modes{ display:flex; flex-direction:column; align-items:center; gap:12px; }
+.modeswitch{
+  display:inline-flex; gap:2px; padding:4px;
+  background:var(--mist); border-radius:var(--r-pill);
+}
+.modeswitch__opt{
+  padding:7px 16px; border-radius:var(--r-pill);
+  font:500 var(--t-small)/1 var(--sans); color:var(--slate);
+}
+.modeswitch__opt.is-on{
+  background:var(--paper); color:var(--ink); outline:1px solid var(--border);
+}
+.privacy__chip{ margin:0; }
+.privacy__note{
+  margin:0; max-width:30ch;
+  font-size:var(--t-cap); line-height:1.5; color:var(--slate);
+}
+
+/* ---- Responsive ---- */
+@media (max-width:900px){
+  .feature-row{ grid-template-columns:1fr; gap:32px; }
+  .feature-row__text,
+  .feature-row--flip .feature-row__text{ order:1; }
+  .feature-row__art,
+  .feature-row--flip .feature-row__art{ order:2; }
+  .feature-row__body{ max-width:52ch; }
+}
+@media (max-width:640px){
+  .features__title{ max-width:none; }
+  .cleanup,.anyapp,.privacy{ max-width:100%; }
+}
+@media (max-width:400px){
+  .anyapp__grid{ gap:8px; }
+  .anyapp__win{ padding:8px 9px; }
+}
+
+/* ---- Large screens (1080p / 2K): use the extra width the widened wrap gives us.
+   These rows carry reading text, so we DON'T push the wrap to --maxw-wide (that would
+   stretch the measure); instead we grow the inner artifact max-widths so the mockups
+   fill their columns instead of floating small, and open the column gap a touch. ---- */
+@media (min-width:1200px){
+  .features__intro{ max-width:680px; }
+  .feature-row{ gap:clamp(56px,5.5vw,104px); }
+  .feature-row__body{ max-width:48ch; }        /* still a comfortable measure at 20px */
+  .cleanup{ max-width:480px; }
+  .anyapp{ max-width:520px; }
+  .privacy{ max-width:460px; }
+}
+@media (min-width:1680px){
+  .features__intro{ max-width:720px; }
+  .feature-row{ gap:clamp(72px,5vw,120px); }
+  .cleanup{ max-width:520px; }
+  .anyapp{ max-width:560px; }
+  .privacy{ max-width:480px; }
+}
+
+/* ---- Reduced motion: freeze the caret ---- */
+@media (prefers-reduced-motion:reduce){
+  .anyapp__caret{ animation:none; }
+}

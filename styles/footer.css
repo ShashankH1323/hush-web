@@ -1,0 +1,90 @@
+/* ============================================================
+   FOOTER  (§6)  — minimal: brand + tagline / in-page anchors / © line
+   Slate text on white, faint top hairline. No external/source links.
+   ============================================================ */
+
+.footer{
+  background:var(--paper);
+  color:var(--slate);
+  border-top:1px solid var(--hairline);
+  padding-block:clamp(40px,6vw,64px);
+}
+
+/* Top row: brand (left) + anchor nav (right) */
+.footer__inner{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:32px;
+  flex-wrap:wrap;
+}
+
+.footer__brand{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  max-width:340px;
+}
+
+.footer__logo{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  width:max-content;
+  color:var(--ink);
+  text-decoration:none;
+  font:400 20px/1 var(--serif);
+  letter-spacing:-.01em;
+}
+.footer__logo img{ display:block; border-radius:6px; }
+
+.footer__tag{
+  margin:0;
+  font-size:var(--t-body);
+  line-height:1.5;
+  color:var(--slate);
+}
+
+.footer__nav{
+  display:flex;
+  gap:28px;
+  flex-wrap:wrap;
+}
+.footer__link{
+  font:500 var(--t-body)/1 var(--sans);
+  color:var(--slate);
+  text-decoration:none;
+  transition:color .15s ease;
+}
+.footer__link:hover{ color:var(--ink); }
+
+/* Bottom row: copyright */
+.footer__base{ margin-top:clamp(28px,4vw,44px); }
+.footer__copy{
+  margin:0;
+  font-size:var(--t-small);
+  letter-spacing:.01em;
+  color:var(--slate);
+}
+
+/* ---- Large screens: give the brand a little more room and open the link spacing. ---- */
+@media (min-width:1200px){
+  .footer__brand{ max-width:420px; }
+  .footer__nav{ gap:36px; }
+}
+/* ---- 1080p / 2K: span the wide container so brand + links sit at the outer edges
+   (space-between) instead of leaving big side margins. Matches the site's wide sections
+   (stats / wide download) at the same breakpoint so the edges stay aligned. ---- */
+@media (min-width:1680px){
+  .footer__inner,
+  .footer__base{ max-width:var(--maxw-wide,1480px); }
+}
+
+@media (max-width:640px){
+  .footer__inner{ gap:24px; }
+  .footer__nav{ gap:18px 24px; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .footer__link{ transition:none; }
+}

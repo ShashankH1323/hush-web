@@ -1,0 +1,176 @@
+/* ============================================================
+   STATS (§V2-C) — day-by-day contribution graph, headline
+   metrics, and a weekly line graph. Alternates on --fog, fills
+   the WIDE container on big screens, stacks cleanly on mobile
+   with NO page-level horizontal overflow (the contribution grid
+   scrolls INSIDE its own card on small screens).
+   Owns: .stats, .stats__*, .contrib-card*, .contrib*,
+   .stat-tiles, .stat-tile*, .usage-card*, .usageline*, .usagefill*.
+   JS (app.js) fills [data-contrib-grid], counts [data-count],
+   draws [data-usageline]. Never styles .hush-* or .artifact.
+   ============================================================ */
+
+.stats{ background:var(--fog); }
+
+/* Wide container guard — base.css (V2-A) owns .wrap--wide globally.
+   This scoped copy keeps the section correct regardless of stylesheet
+   load order, and falls back gracefully if --maxw-wide is undefined. */
+.stats .wrap--wide{
+  max-width:var(--maxw-wide, 1480px);
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+}
+
+/* ---------- Intro (reading measure, not full width) ---------- */
+.stats__intro{ max-width:720px; }
+.stats__title{ margin:14px 0 0; }
+.stats__lead{ margin:16px 0 0; max-width:58ch; }
+
+/* ---------- Vertical rhythm between the three blocks ---------- */
+.stats__stack{
+  display:flex; flex-direction:column;
+  gap:clamp(20px,2.4vw,32px);
+  margin-top:clamp(40px,5vw,64px);
+}
+
+/* ============================================================
+   Contribution graph — the day-by-day part (neutral .card)
+   ============================================================ */
+.contrib-card{ padding:clamp(20px,2.6vw,36px); }
+.contrib-card__head{ margin-bottom:clamp(18px,2vw,26px); }
+.contrib-card__title{
+  margin:0;
+  font:400 clamp(22px,2.4vw,30px)/1.2 var(--serif);
+  letter-spacing:-.015em; color:var(--ink);
+}
+.contrib-card__num{ color:var(--hush-accent-ink); }
+.contrib-card__sub{
+  margin:8px 0 0;
+  font-size:var(--t-cap); line-height:1.5; color:var(--slate);
+}
+
+/* 53 weeks as columns, 7 day-rows. Squares ~13px, gap 3px, radius 3px.
+   A plain block grid stretches to the card width and left-aligns its
+   FIXED-size squares on big screens (never stretched); on small screens
+   the fixed track total exceeds the box and the grid scrolls
+   horizontally INSIDE the card — the page itself never overflows. */
+.contrib{ --sq:13px; --gap:3px; }
+.contrib__grid{
+  display:grid;
+  grid-auto-flow:column;                 /* each column = one week */
+  grid-template-rows:repeat(7, var(--sq));
+  grid-auto-columns:var(--sq);
+  gap:var(--gap);
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding-bottom:4px;                    /* breathing room for the scrollbar */
+  scrollbar-width:thin;
+}
+.contrib__day{
+  width:var(--sq); height:var(--sq);
+  border-radius:3px; background:var(--mist);
+}
+
+/* Warm 5-level scale — shared by the grid days AND the legend keys.
+   L0 --mist · L1 #fbe1d1 · L2 #f0c0a0 · L3 #d68a5e · L4 --hush-accent */
+.contrib__day[data-level="0"],
+.contrib__legend [data-level="0"]{ background:var(--mist); }
+.contrib__day[data-level="1"],
+.contrib__legend [data-level="1"]{ background:#fbe1d1; }
+.contrib__day[data-level="2"],
+.contrib__legend [data-level="2"]{ background:#f0c0a0; }
+.contrib__day[data-level="3"],
+.contrib__legend [data-level="3"]{ background:#d68a5e; }
+.contrib__day[data-level="4"],
+.contrib__legend [data-level="4"]{ background:var(--hush-accent); }
+
+.contrib__legend{
+  display:flex; align-items:center; gap:6px;
+  margin-top:16px;
+  font:500 var(--t-small)/1 var(--sans); color:var(--slate);
+}
+.contrib__legend span{
+  width:12px; height:12px; border-radius:3px; flex:none;
+}
+
+/* ============================================================
+   Headline metric tiles — 5 across → 3 → 2 → tight 2 on phones
+   ============================================================ */
+.stat-tiles{
+  display:grid;
+  grid-template-columns:repeat(5, minmax(0,1fr));
+  gap:clamp(12px,1.4vw,20px);
+}
+.stat-tile{
+  min-width:0;
+  background:var(--mist); border-radius:var(--r-card);
+  padding:clamp(20px,2.2vw,30px);
+  display:flex; flex-direction:column; gap:8px;
+}
+.stat-tile__num{
+  font:400 clamp(30px,3vw,46px)/1 var(--serif);
+  letter-spacing:-.02em; color:var(--ink);
+  font-variant-numeric:tabular-nums;     /* keeps width steady while counting */
+}
+.stat-tile__label{
+  font:500 var(--t-small)/1.2 var(--sans);
+  letter-spacing:.01em; color:var(--slate);
+}
+
+/* ============================================================
+   Words-per-week line graph (neutral .card)
+   ============================================================ */
+.usage-card{ padding:clamp(20px,2.6vw,36px); }
+.usage-card__head{ margin-bottom:clamp(14px,1.6vw,22px); }
+.usage-card__title{
+  margin:0;
+  font:400 clamp(20px,2vw,26px)/1.2 var(--serif);
+  letter-spacing:-.015em; color:var(--ink);
+}
+.usage-card__sub{
+  margin:8px 0 0;
+  font-size:var(--t-cap); line-height:1.5; color:var(--slate);
+}
+.usage-card__plot{ width:100%; }
+.usageline{
+  display:block; width:100%;
+  height:clamp(180px,24vh,300px);
+  overflow:visible;                      /* keep the top peak stroke un-clipped */
+}
+/* Faint static baseline (fallback; JS layers the path + area on top). */
+.usageline__base{
+  stroke:var(--border); stroke-width:1;
+  vector-effect:non-scaling-stroke;
+}
+/* Soft terracotta area fill gradient (tokens via CSS stop-color). */
+.usagefill__top{ stop-color:var(--hush-accent); stop-opacity:.22; }
+.usagefill__bot{ stop-color:var(--hush-accent); stop-opacity:0; }
+/* Line + area marks are drawn by app.js; style the expected BEM hooks
+   and a plain <polyline> so the resting look is right either way.
+   preserveAspectRatio="none" distorts geometry, so pin the stroke width. */
+.usageline__area{ fill:url(#usagefill); stroke:none; }
+.usageline__line,
+.usageline polyline{
+  fill:none; stroke:var(--hush-accent); stroke-width:2.5;
+  stroke-linecap:round; stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width:1100px){
+  .stat-tiles{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+}
+@media (max-width:720px){
+  .stat-tiles{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+}
+@media (max-width:400px){
+  .contrib{ --sq:12px; }
+  .stat-tile{ padding:18px 16px; }
+  .stat-tile__num{ font-size:clamp(28px,9vw,40px); }
+}
+
+/* Reduced motion: nothing here self-animates. app.js jumps to the
+   final state immediately (grid filled, counts at value, line drawn),
+   and base.css neutralizes .reveal globally. Nothing to override here. */

@@ -1,0 +1,109 @@
+/* base.css — foundational reset, typography, buttons, cards, reveal, layout rhythm.
+   Consumes tokens.css. Site voice: warm serif display on white, quiet sans body. */
+
+/* ---------- Reset & document defaults ---------- */
+*{ box-sizing:border-box; }
+*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:var(--t-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+  margin:0;
+  overflow-x:hidden;
+}
+
+/* Sensible media & form-control inheritance defaults */
+img,svg,video,canvas{ display:block; max-width:100%; }
+button,input,select,textarea{ font:inherit; color:inherit; }
+a{ color:inherit; }
+
+/* Warm editorial selection to match the peach/sienna accent pair */
+::selection{ background:var(--peach); color:var(--sienna); }
+::-moz-selection{ background:var(--peach); color:var(--sienna); }
+
+/* Visible focus for keyboard users only */
+:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; border-radius:2px; }
+
+/* ---------- Layout container ---------- */
+.wrap{
+  max-width:var(--maxw);
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+}
+/* Wide container — for visual/analytics sections that should fill big screens */
+.wrap--wide{
+  max-width:var(--maxw-wide);
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+}
+/* A touch more section rhythm on very large screens (uses the reclaimed width gracefully) */
+@media (min-width:1680px){ :root{ --sect:clamp(80px,9vw,150px); } }
+
+/* ---------- Eyebrow / kicker ---------- */
+.eyebrow{
+  font:500 var(--t-small)/1 var(--sans);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--ash);
+}
+
+/* ---------- Serif heading helpers (Fraunces, weight 400 only — never bold) ---------- */
+.display{ font:400 var(--t-display)/1.05 var(--serif); letter-spacing:-.03em; margin:0; }
+.h-lg{ font:400 var(--t-h-lg)/1.1 var(--serif); letter-spacing:-.02em; margin:0; }
+.h{ font:400 var(--t-h)/1.15 var(--serif); letter-spacing:-.015em; margin:0; }
+.serif-i{ font-style:italic; }
+
+/* ---------- Supporting copy ---------- */
+.lead{ font-size:var(--t-body-lg); color:var(--slate); line-height:1.5; }
+.muted{ color:var(--slate); }
+
+/* ---------- Buttons (pill geometry, the site's only interactive lozenge) ---------- */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  height:48px;
+  padding:0 22px;
+  border-radius:var(--r-pill);
+  font:500 var(--t-body)/1 var(--sans);
+  cursor:pointer;
+  text-decoration:none;
+  border:1px solid transparent;
+  transition:transform .15s,box-shadow .2s,background .2s;
+}
+.btn--fill{ background:var(--ink); color:#fff; }
+.btn--fill:hover{ transform:translateY(-1px); box-shadow:var(--shadow-soft); }
+.btn--ghost{ background:transparent; color:var(--ink); border-color:var(--ink); }
+.btn--ghost:hover{ background:var(--ink); color:#fff; }
+
+/* ---------- Cards & accent surfaces ---------- */
+/* Neutral workhorse card — flat, soft, NO shadow */
+.card{ background:var(--mist); border-radius:var(--r-card); }
+/* The single rationed chromatic surface — max one per page */
+.accent{ background:var(--peach); color:var(--sienna); border-radius:var(--r-card); }
+/* Floating product artifact — the only elevation on the site (white paper + soft shadow) */
+.artifact{ background:var(--paper); border-radius:var(--r-art); box-shadow:var(--shadow-art); }
+
+/* ---------- Reveal-on-scroll utility ---------- */
+.reveal{ opacity:0; transform:translateY(18px); }
+.reveal.is-in{
+  opacity:1;
+  transform:none;
+  transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1);
+}
+
+/* ---------- Section rhythm (alternating bg handled per-section) ---------- */
+.section{ padding-block:var(--sect); }
+
+/* ---------- Reduced-motion: jump to final states, no scroll smoothing ---------- */
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  .reveal{ opacity:1!important; transform:none!important; }
+}
