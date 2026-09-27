@@ -1,0 +1,10 @@
+{
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/downloads/:file",
+      "destination": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.1/:file",
+      "permanent": false
+    }
+  ]
+}
