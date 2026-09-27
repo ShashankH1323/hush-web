@@ -2,18 +2,8 @@
   "cleanUrls": true,
   "redirects": [
     {
-      "source": "/downloads/:path*setup.exe",
-      "destination": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.1/Hush_1.0.1_x64-setup.exe",
-      "permanent": false
-    },
-    {
-      "source": "/downloads/:path*.msi",
-      "destination": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.1/Hush_1.0.1_x64_en-US.msi",
-      "permanent": false
-    },
-    {
       "source": "/downloads/:file",
-      "destination": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.1/Hush_1.0.1_x64-setup.exe",
+      "destination": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.2/:file",
       "permanent": false
     }
   ]
