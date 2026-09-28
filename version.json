@@ -5,5 +5,6 @@
   "download_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.5/Hush_1.0.5_x64-setup.exe",
   "msi_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.5/Hush_1.0.5_x64_en-US.msi",
   "website_url": "https://hush-web-alpha.vercel.app",
-  "notes": "Persistent proxy keep-warm, Render reform primary, periodic topmost pill z-order reassertion, and two-step update UX."
+  "notes": "Persistent proxy keep-warm, Render reform primary, periodic topmost pill z-order reassertion, and two-step update UX.",
+  "sha256": "a919b56606999785e8f913617b4c894696bdb5ebe9aa44b6924abfcda169fc46"
 }
