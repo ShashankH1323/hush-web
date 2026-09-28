@@ -1,10 +1,9 @@
 {
-  "version": "1.0.3",
-  "name": "Hush 1.0.3",
+  "version": "1.0.4",
+  "name": "Hush 1.0.4",
   "release_date": "2026-09-28",
-  "download_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.3/Hush_1.0.3_x64-setup.exe",
-  "msi_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.3/Hush_1.0.3_x64_en-US.msi",
+  "download_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.4/Hush_1.0.4_x64-setup.exe",
+  "msi_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.4/Hush_1.0.4_x64_en-US.msi",
   "website_url": "https://hush-web-alpha.vercel.app",
-  "notes": "Security audit fixes, updater integrity verification, defensive CSP, and codebase guide.",
-  "sha256": "9e7a6a2b35412e87376764d7162591e6ccdd914061ca654d8e92f1776c3b789d"
+  "notes": "Seamless one-click auto-updater, unattended installer execution, and auto-relaunch."
 }
