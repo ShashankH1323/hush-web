@@ -1,0 +1,125 @@
+/* demo.css — hero demo: mock app window + text field + Hush bar (canvas) + keycaps */
+.demo { position: relative; width: min(100%, 800px); margin-inline: auto; text-align: left; --k: 1.4; }
+.demo::before { /* accent glow behind the window */
+  content: ""; position: absolute; left: 4%; right: 4%; top: 8%; bottom: -10%; z-index: -1; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(94, 234, 212, .13), rgba(94, 234, 212, .04) 60%, transparent);
+}
+
+.win {
+  position: relative; overflow: hidden; isolation: isolate; border-radius: var(--r-2xl);
+  border: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 var(--highlight), 0 30px 80px -20px rgba(0, 0, 0, .7), 0 2px 6px rgba(0, 0, 0, .3);
+}
+.win::before { /* opaque-ish surface. No backdrop-filter here: it sits over a flat backdrop (nothing to blur)
+                   and a canvas inside a backdrop-filtered box renders as an opaque rectangle in some compositors. */
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: rgba(23, 25, 29, .94);
+}
+
+/* --- Title bar --- */
+.win__bar { height: 46px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px 0 18px; border-bottom: 1px solid var(--border); }
+.win__app { display: inline-flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 500; color: var(--text-2); min-width: 0; transition: opacity var(--dur-3) var(--ease-out); }
+.win__glyph { display: inline-flex; width: 18px; height: 18px; color: var(--accent); }
+.win__glyph svg { width: 18px; height: 18px; }
+.win__name { color: var(--text); white-space: nowrap; }
+.win__sub { color: var(--text-3); font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.win__sub::before { content: "·"; margin-right: 9px; color: var(--text-4); }
+.win__ctrl { display: inline-flex; align-items: center; gap: 20px; color: var(--text-4); }
+.win__c { position: relative; display: block; width: 10px; height: 10px; }
+.win__c--min::before { content: ""; position: absolute; left: 0; right: 0; top: 5px; height: 1px; background: currentColor; }
+.win__c--max { border: 1px solid currentColor; border-radius: 2px; width: 9px; height: 9px; }
+.win__c--x::before, .win__c--x::after { content: ""; position: absolute; left: -1px; right: -1px; top: 5px; height: 1px; background: currentColor; transform: rotate(45deg); }
+.win__c--x::after { transform: rotate(-45deg); }
+
+/* --- Context above the field (previous messages / email header / code) --- */
+.win__ctx {
+  height: 108px; padding: 14px 20px 14px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 34%); mask-image: linear-gradient(to bottom, transparent, #000 34%);
+  transition: opacity var(--dur-3) var(--ease-out);
+}
+.msg { max-width: 72%; padding: 8px 14px; border-radius: 16px; font-size: 14px; line-height: 1.35; letter-spacing: -.005em; color: var(--text); }
+.msg--out { align-self: flex-end; background: var(--accent-soft); border: 1px solid rgba(94, 234, 212, .18); border-bottom-right-radius: 6px; }
+.msg--in { align-self: flex-start; background: rgba(255, 255, 255, .05); border: 1px solid var(--border); border-bottom-left-radius: 6px; color: var(--text-2); }
+.kv { display: flex; align-items: baseline; gap: 14px; padding: 8px 2px; border-bottom: 1px solid var(--border); font-size: 14px; }
+.kv span { flex: none; width: 64px; font: 400 12px/1 var(--font-mono); color: var(--text-3); }
+.kv b { font-weight: 500; color: var(--text-2); }
+.code { font: 400 13px/1.75 var(--font-mono); letter-spacing: 0; color: var(--text-2); white-space: pre; overflow: hidden; }
+.code .ln { display: inline-block; width: 26px; color: var(--text-4); user-select: none; }
+.code .k { color: #79E7D5; } .code .f { color: var(--text); } .code .s { color: #8FB4FF; } .code .p { color: var(--text-3); }
+
+/* --- Text field --- */
+.field {
+  position: relative; margin: 0 20px; padding: 34px 20px 18px; min-height: 120px; border-radius: var(--r-lg);
+  background: rgba(255, 255, 255, .035); border: 1px solid var(--border-strong);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+  transition: opacity var(--dur-3) var(--ease-out);
+}
+.field::after { /* listening ring — fades in with opacity */
+  content: ""; position: absolute; inset: -1px; border-radius: 17px; pointer-events: none; opacity: 0;
+  border: 1px solid rgba(94, 234, 212, .55); box-shadow: 0 0 0 4px rgba(94, 234, 212, .08), 0 0 36px rgba(94, 234, 212, .12);
+  transition: opacity var(--dur-4) var(--ease-out);
+}
+.field.is-live::after { opacity: 1; }
+.field__cap { position: absolute; left: 20px; top: 12px; height: 14px; width: 120px; font: 500 11px/14px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+.cap { position: absolute; left: 0; top: 0; white-space: nowrap; transition: opacity var(--dur-4) var(--ease-out); }
+.cap--raw { color: var(--text-3); }
+.cap--clean { color: var(--accent); opacity: 0; }
+.field.is-clean .cap--raw { opacity: 0; }
+.field.is-clean .cap--clean { opacity: 1; }
+
+.field__text { font-size: 21px; line-height: 1.5; letter-spacing: -.015em; color: var(--text); font-weight: 400; }
+.field--code .field__text { position: relative; padding-left: 34px; font: 400 15px/1.7 var(--font-mono); letter-spacing: 0; }
+.field--code .field__text::before { content: attr(data-ln); position: absolute; left: 0; color: var(--text-4); }
+.ph { color: var(--text-4); }
+
+.tok {
+  position: relative; display: inline-block; margin-right: .28em; color: var(--text-2);
+  opacity: 0; transform: translateY(5px); filter: blur(4px);
+  transition: opacity .24s var(--ease-out), transform .24s var(--ease-out), filter .24s var(--ease-out), color .5s var(--ease-out);
+}
+.tok.is-on { opacity: 1; transform: none; filter: none; }
+.tok.is-clean { color: var(--text); }
+.tok--drop::after { /* strike-through draws left→right (transform only) */
+  content: ""; position: absolute; left: -1px; right: -1px; top: 57%; height: 1.5px; border-radius: 1px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform .34s var(--ease-out) calc(var(--fi, 0) * 120ms);
+}
+.tok--drop.is-flag { color: var(--text-3); }
+.tok--drop.is-flag::after { transform: scaleX(1); }
+.tok.is-out { opacity: 0; transform: scale(.82); filter: blur(5px); transition-duration: .26s; }
+.caret { display: inline-block; width: 2px; height: 1.1em; margin-left: 1px; vertical-align: -.2em; border-radius: 1px; background: var(--accent); animation: blink 1.05s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.field.is-morph .caret { animation: none; opacity: 0; }
+
+/* --- Tray: the taskbar-ish strip where the Hush bar lives --- */
+.win__tray { position: relative; height: 96px; margin-top: 18px; display: grid; place-items: center; background: linear-gradient(rgba(255, 255, 255, .018), rgba(255, 255, 255, .04)); border-top: 1px solid var(--border); }
+.bar { width: calc(240px * var(--k)); height: calc(64px * var(--k)); }
+
+/* --- Scene swap (crossfade) --- */
+.win.is-swapping .win__app, .win.is-swapping .win__ctx, .win.is-swapping .field { opacity: 0; }
+
+/* --- Hint under the window --- */
+.demo__hint { margin-top: 24px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; font-size: 14px; color: var(--text-3); text-align: center; }
+
+/* Until demo.js takes over, keep the static text hidden so it doesn't flash before the reset. */
+.js .demo:not(.is-ready) .field__text { visibility: hidden; animation: unhide 0s 3s forwards; }
+@keyframes unhide { to { visibility: visible; } }
+
+@media (max-width: 640px) {
+  .demo { --k: 1.08; }
+  .win { border-radius: var(--r-xl); }
+  .win__bar { height: 42px; padding: 0 14px; }
+  .win__ctrl { gap: 14px; }
+  .win__ctx { height: 100px; padding: 12px 14px 12px; }
+  .msg { font-size: 13px; max-width: 88%; }
+  .code { font-size: 12px; }
+  .field { margin: 0 12px; padding: 32px 14px 14px; min-height: 138px; }
+  .field__cap { left: 14px; }
+  .field__text { font-size: 17px; }
+  .field--code .field__text { font-size: 13px; padding-left: 26px; }
+  .win__tray { height: 88px; margin-top: 16px; }
+  .demo__hint { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tok, .tok--drop::after { transition-duration: 0s; }
+  .caret { animation: none; }
+}

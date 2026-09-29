@@ -1,119 +1,25 @@
-/* HERO — styles/hero.css · owned by Hero agent (per CONTRACT §2)
-   Loads after: tokens.css → base.css → artifacts.css → nav.css
-   Uses tokens/helpers from those files (.wrap .display .lead .eyebrow .btn .artifact .reveal .hush-*).
-   Mobile-first: base = clean stacked hero; collage (absolute floats + tilts) added at >=961px. */
+/* hero.css — headline, subhead, CTA */
+.hero { position: relative; padding: clamp(24px, 4.5vh, 56px) 0 clamp(72px, 9vw, 120px); text-align: center; }
+.hero::before { /* faint hairline grid, masked to a soft ellipse */
+  content: ""; position: absolute; left: 0; right: 0; top: calc(var(--nav-h) * -1); height: 760px; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, .035) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, .035) 1px, transparent 1px);
+  background-size: 72px 72px; background-position: center top;
+  -webkit-mask-image: radial-gradient(ellipse 60% 62% at 50% 34%, #000 10%, transparent 72%);
+  mask-image: radial-gradient(ellipse 60% 62% at 50% 34%, #000 10%, transparent 72%);
+}
+.hero__inner { display: flex; flex-direction: column; align-items: center; }
+.hero__title {
+  font-weight: 600; font-size: clamp(50px, 8.8vw, 100px); line-height: .98; letter-spacing: -.055em;
+  background: linear-gradient(180deg, #FFFFFF 10%, #B7BCC5 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  padding-bottom: .06em;
+}
+.hero__accent { background: linear-gradient(180deg, #9FF5E7 0%, var(--accent) 60%, #2FD1BB 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero__sub { margin-top: 22px; max-width: 44em; font-size: clamp(17px, 1.7vw, 20px); line-height: 1.5; color: var(--text-2); text-wrap: balance; }
+.hero__cta { margin-top: 34px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.demo { margin-top: clamp(36px, 4.6vw, 56px); }
 
-.hero{
-  position:relative;
-  background:var(--paper);
-  overflow:hidden;                 /* clip any float bleed at the edges */
-}
-.hero__grid{
-  position:relative;               /* positioning context for absolute floats */
-  padding-block:clamp(48px,11vw,80px);
-}
-
-/* ---- Text column (mobile-first: centered, readable) ---- */
-.hero__content{
-  position:relative;
-  z-index:2;                       /* text always above floating artifacts */
-  max-width:720px;
-  margin-inline:auto;
-  text-align:center;
-}
-.hero__eyebrow{ margin:0 0 20px; }
-.hero__title{ margin:0; }
-.hero__lead{
-  margin:24px auto 0;
-  max-width:560px;
-}
-.hero__actions{
-  margin-top:32px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:14px;
-  justify-content:center;
-}
-.hero__meta{
-  margin:20px 0 0;
-  color:var(--slate);
-  font-size:var(--t-small);
-  letter-spacing:.01em;
-}
-
-/* ---- Kinetic word reveal on the H1 (JS sets .is-in + transition-delay) ---- */
-.hero .word{
-  display:inline-block;
-  opacity:0;
-  transform:translateY(.5em);
-}
-.hero .word.is-in{
-  opacity:1;
-  transform:none;
-  transition:opacity .5s cubic-bezier(.22,1,.36,1),transform .5s cubic-bezier(.22,1,.36,1);
-}
-
-/* ---- Floating artifacts: mobile default = simple centered stack ---- */
-.hero__float{
-  margin:22px auto 0;
-  display:flex;
-  justify-content:center;
-}
-.hero__float .artifact{ max-width:min(340px,100%); padding:14px 16px; }
-.hero__float--keys,
-.hero__float--stat{ display:none; }        /* hide smaller decorative floats on phones */
-
-/* Full-width action buttons on the narrowest screens */
-@media (max-width:479px){
-  .hero__actions{ flex-direction:column; align-items:stretch; }
-  .hero__actions .btn{ width:100%; justify-content:center; }
-}
-
-/* ---- Editorial collage: absolute floats tucked into the four corners (>=961px) ---- */
-@media (min-width:961px){
-  .hero__grid{
-    display:grid;
-    place-items:center;                              /* centers the single in-flow child */
-    min-height:clamp(620px,88vh,860px);
-    padding-block:clamp(64px,10vh,120px);
-  }
-  .hero__content{ max-width:680px; }
-
-  .hero__float{
-    position:absolute;
-    z-index:1;
-    margin:0;
-    display:block;
-  }
-  .hero__float--keys,
-  .hero__float--stat{ display:block; }
-
-  /* corners — tilt lives on the outer float so the inner .reveal keeps its own transform */
-  .hero__float--pill{ top:clamp(20px,6vh,52px);    right:0; transform:rotate(-5deg); }
-  .hero__float--keys{ top:clamp(58px,13vh,104px);  left:6px; transform:rotate(-9deg); }
-  .hero__float--stat{ bottom:clamp(52px,10vh,96px); left:0; transform:rotate(6deg); }
-  .hero__float--last{ bottom:clamp(24px,6vh,52px);  right:0; transform:rotate(5deg); }
-}
-
-/* ---- Wide: give the headline more room, floats breathe wider ---- */
-@media (min-width:1140px){
-  .hero__content{ max-width:720px; }
-  .hero__float--pill{ top:clamp(28px,7vh,60px); }
-  .hero__float--last{ bottom:clamp(28px,7vh,60px); }
-}
-
-/* ---- Large screens (1080p / 2K): widen the field so the floats use the side
-   whitespace instead of leaving big dead margins. The grid is the positioning
-   context, so widening it pushes the corner floats further out. ---- */
-@media (min-width:1440px){
-  .hero__grid{ max-width:var(--maxw-wide, 1480px); }
-}
-@media (min-width:1920px){
-  .hero__grid{ max-width:min(1760px, 100vw - 128px); }
-  .hero__content{ max-width:760px; }
-}
-
-/* ---- Reduced motion: show final state, no reveal animation ---- */
-@media (prefers-reduced-motion:reduce){
-  .hero .word{ opacity:1; transform:none; }
+@media (max-width: 640px) {
+  .hero__title span { display: block; }
+  .hero__title { line-height: 1; font-size: clamp(48px, 15.5vw, 68px); }
+  .hero__cta .btn--lg { height: 54px; }
 }
