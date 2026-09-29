@@ -1,377 +1,363 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hush — Voice dictation that writes like you</title>
-  <meta name="description" content="Hush is voice dictation for Windows. Press one shortcut in any app, speak, and Hush types it back — cleaned up to read like you wrote it. Free for Windows 10 & 11.">
-  <meta name="theme-color" content="#ffffff">
+  <title>Hush — Speak. It writes.</title>
+  <meta name="description" content="Hush is voice dictation for Windows. Hold a shortcut in any app, speak, and clean text is pasted where your cursor is. Free for Windows 10 & 11.">
+  <meta name="theme-color" content="#0B0C0E">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="assets/hush-icon-128.png">
-  <link rel="apple-touch-icon" href="assets/hush-icon-128.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
   <!-- Open Graph / social -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Hush — Voice dictation that writes like you">
-  <meta property="og:description" content="Press one shortcut in any app, speak, and Hush types it back — cleaned up to read like you wrote it.">
-  <meta property="og:image" content="assets/hush-icon-128.png">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:title" content="Hush — Speak. It writes.">
+  <meta property="og:description" content="Hold a shortcut in any app, speak, and clean text is pasted where your cursor is.">
+  <meta property="og:image" content="https://hush-web-alpha.vercel.app/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Fonts: Fraunces (serif display) + Inter (body); Geist (app artifacts) isolated so a miss can't break the rest -->
+  <!-- Fonts: Geist + Geist Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&family=Geist+Mono:wght@400..500&display=swap">
 
-  <!-- Site styles (load order per CONTRACT) -->
+  <script>document.documentElement.className = "js";</script>
+
   <link rel="stylesheet" href="styles/tokens.css">
   <link rel="stylesheet" href="styles/base.css">
-  <link rel="stylesheet" href="styles/artifacts.css">
   <link rel="stylesheet" href="styles/nav.css">
   <link rel="stylesheet" href="styles/hero.css">
-  <link rel="stylesheet" href="styles/features.css">
-  <link rel="stylesheet" href="styles/stats.css">
-  <link rel="stylesheet" href="styles/download.css">
-  <link rel="stylesheet" href="styles/footer.css">
+  <link rel="stylesheet" href="styles/demo.css">
+  <link rel="stylesheet" href="styles/sections.css">
 
+  <script src="demo.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
-<!-- ===== sections concatenated below: nav · hero · assemble · features · download · footer ===== -->
-<!-- NAV — §1. Transparent sticky top bar; .nav--scrolled toggled by app.js -->
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Faint fixed backdrop: two blurred blobs so the frosted surfaces read subtly -->
+<div class="backdrop" aria-hidden="true"><i class="blob blob--a"></i><i class="blob blob--b"></i></div>
+
+<!-- NAV -->
 <header class="nav" data-nav>
   <div class="wrap nav__inner">
-    <a class="nav__logo" href="#top">
-      <img src="assets/hush-icon-128.png" alt="" width="24" height="24">
-      <span>Hush</span>
+    <a class="logo" href="#top" aria-label="Hush, back to top">
+      <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><circle class="logo__dot" cx="6.5" cy="12" r="3.25" fill="var(--accent)"/><rect class="logo__line" x="11.5" y="10.6" width="9.5" height="2.8" rx="1.4" fill="currentColor"/></svg>
+      <span class="logo__word">hush</span>
     </a>
-    <nav class="nav__links" aria-label="Primary">
+    <div class="nav__right">
       <a class="nav__link" href="#features">Features</a>
-      <a class="nav__link" href="#stats">Stats</a>
-    </nav>
-    <a class="btn btn--fill nav__cta" href="#download">Download</a>
+      <a class="btn btn--soft btn--sm" href="https://github.com/ShashankH1323/hush-web/releases/download/v1.0.6/Hush_1.0.6_x64-setup.exe" download data-download>Download</a>
+    </div>
   </div>
 </header>
-<!-- HERO — sections/hero.html · owned by Hero agent (per CONTRACT §2)
-     Fragment only (no html/head/body). Editorial text-and-UI collage on white.
-     Artifact markup (pill / lastcard / keycaps / stat) embedded VERBATIM from the contract. -->
-<section id="top" class="hero">
-  <div class="wrap hero__grid">
 
-    <div class="hero__content">
-      <p class="eyebrow hero__eyebrow">Voice dictation for Windows</p>
+<main id="main">
 
-      <h1 class="display hero__title">
-        <span class="word">Speak,</span>
-        <span class="word">and</span>
-        <span class="word">it’s</span>
-        <span class="word"><span class="serif-i">written</span>.</span>
-      </h1>
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="wrap hero__inner">
+    <h1 class="hero__title rise" style="--i:0"><span>Speak.</span> <span class="hero__accent">It writes.</span></h1>
+    <p class="hero__sub rise" style="--i:1">Hold a shortcut anywhere, speak, and clean text lands in the app you’re using.</p>
 
-      <p class="lead hero__lead">Press one shortcut in any app, say what you mean, and Hush types it back — cleaned up to read like you wrote it. Not raw transcription. Text you’d actually send.</p>
-
-      <div class="hero__actions">
-        <a class="btn btn--fill" href="https://github.com/ShashankH1323/hush-web/releases/download/v1.0.6/Hush_1.0.6_x64-setup.exe" download data-download>
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg>
-          Download for Windows
-        </a>
-        <a class="btn btn--ghost" href="#features">See how it works</a>
-      </div>
-
-      <p class="hero__meta">Free · Windows 10 &amp; 11 · 64-bit · ~99 MB</p>
+    <div class="hero__cta rise" style="--i:2">
+      <a class="btn btn--primary btn--lg" href="https://github.com/ShashankH1323/hush-web/releases/download/v1.0.6/Hush_1.0.6_x64-setup.exe" download data-download>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M3 3h8.5v8.5H3zM12.5 3H21v8.5h-8.5zM3 12.5h8.5V21H3zM12.5 12.5H21V21h-8.5z"/></svg>
+        Download for Windows
+      </a>
+      <p class="meta"><span data-version-text>Version 1.0.6</span><i class="meta__sep" aria-hidden="true"></i><span>Windows 10 &amp; 11</span><i class="meta__sep" aria-hidden="true"></i><span>~99 MB</span></p>
     </div>
 
-    <!-- Floating product artifacts (verbatim markup; tilts via .hero__float, reveal via inner .reveal) -->
-    <div class="hero__float hero__float--pill" aria-hidden="true" inert>
-      <div class="artifact reveal">
-        <div class="hush-pill hush-pill--recording" data-pill>
-          <button class="hush-pill__btn hush-pill__btn--cancel" aria-label="Cancel"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-          <div class="hush-meter" data-meter>
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-          </div>
-          <button class="hush-pill__btn hush-pill__btn--accept" aria-label="Accept"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></button>
+    <!-- Hero demo: messy speech -> clean text, driven by demo.js. Static clean state is the no-JS / reduced-motion fallback. -->
+    <div class="demo rise" style="--i:3" data-demo>
+      <div class="win" data-win aria-hidden="true">
+        <div class="win__bar">
+          <span class="win__app"><span class="win__glyph" data-glyph></span><span class="win__name" data-app>Messages</span><span class="win__sub" data-sub>Sam Rivera</span></span>
+          <span class="win__ctrl" aria-hidden="true"><i class="win__c win__c--min"></i><i class="win__c win__c--max"></i><i class="win__c win__c--x"></i></span>
         </div>
-      </div>
-    </div>
-
-    <div class="hero__float hero__float--last">
-      <div class="artifact reveal">
-        <div class="hush-lastcard">
-          <div class="hush-lastcard__head"><span class="hush-lastcard__label">LAST DICTATION</span></div>
-          <p class="hush-lastcard__text">Let’s ship the beta on Friday — I’ll send the notes tonight.</p>
+        <div class="win__ctx" data-ctx>
+          <div class="msg msg--out">Sync on the launch plan Wednesday?</div>
+          <div class="msg msg--in">Wednesday is packed, sorry.</div>
         </div>
+        <div class="field is-clean" data-field>
+          <span class="field__cap" aria-hidden="true"><b class="cap cap--raw">You said</b><b class="cap cap--clean">Hush wrote</b></span>
+          <p class="field__text" data-text><span class="tok is-on is-clean">Can</span><span class="tok is-on is-clean">we</span><span class="tok is-on is-clean">move</span><span class="tok is-on is-clean">the</span><span class="tok is-on is-clean">meeting</span><span class="tok is-on is-clean">to</span><span class="tok is-on is-clean">Thursday?</span><i class="caret"></i></p>
+        </div>
+        <div class="win__tray"><canvas class="bar" data-bar width="300" height="80"></canvas></div>
       </div>
+      <p class="demo__hint">Hold
+        <span class="keys"><kbd class="kbd" data-key>Ctrl</kbd><kbd class="kbd" data-key>Shift</kbd><kbd class="kbd" data-key>Space</kbd></span>
+        in any app
+      </p>
+      <p class="sr-only">Example: saying “um so like can we move the uh meeting to thursday” pastes “Can we move the meeting to Thursday?” into the message field.</p>
     </div>
-
-    <div class="hero__float hero__float--keys">
-      <div class="reveal">
-        <span class="hush-keys"><kbd>Ctrl</kbd><kbd>Space</kbd></span>
-      </div>
-    </div>
-
-    <div class="hero__float hero__float--stat">
-      <div class="artifact reveal">
-        <div class="hush-stat"><span class="hush-stat__val">3,480</span><span class="hush-stat__unit">min saved</span></div>
-      </div>
-    </div>
-
   </div>
 </section>
-<!-- FEATURES — three reasons Hush behaves like good writing. Fragment only. -->
-<section id="features" class="section features">
+
+<!-- FEATURES -->
+<section class="section" id="features">
   <div class="wrap">
+    <header class="section__head reveal">
+      <p class="eyebrow">Features</p>
+      <h2 class="h2">Say it once. It’s already clean.</h2>
+    </header>
 
-    <!-- Intro -->
-    <div class="features__intro reveal">
-      <p class="eyebrow">Why Hush</p>
-      <h2 class="h features__title">Dictation that behaves like good writing.</h2>
-    </div>
+    <div class="grid">
 
-    <div class="features__rows">
-
-      <!-- 1 · Writes the way you would -->
-      <article class="feature-row reveal">
-        <div class="feature-row__text">
-          <p class="feature-row__num">01</p>
-          <h3 class="feature-row__title">Writes the way you would.</h3>
-          <p class="feature-row__body">Hush cleans up filler, fixes grammar and punctuation, and keeps your voice &mdash; so what lands is text you&rsquo;d actually send, not a rough transcript.</p>
-        </div>
-        <div class="feature-row__art">
-          <div class="cleanup">
-            <div class="cleanup__raw">
-              <span class="cleanup__label">You said</span>
-              <p class="cleanup__rawtext">um, so like let&rsquo;s ship the&mdash; the beta on friday i think, and uh i&rsquo;ll send the notes tonight</p>
-            </div>
-            <div class="cleanup__flow" aria-hidden="true">
-              <span class="cleanup__line"></span>
-              <span class="cleanup__node"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              <span class="cleanup__line"></span>
-            </div>
-            <div class="artifact cleanup__out">
-              <div class="hush-lastcard">
-                <div class="hush-lastcard__head"><span class="hush-lastcard__label">LAST DICTATION</span></div>
-                <p class="hush-lastcard__text">Let&rsquo;s ship the beta on Friday &mdash; I&rsquo;ll send the notes tonight.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 2 · Works in every window -->
-      <article class="feature-row feature-row--flip reveal">
-        <div class="feature-row__text">
-          <p class="feature-row__num">02</p>
-          <h3 class="feature-row__title">Works in every window.</h3>
-          <p class="feature-row__body">One global shortcut. Email, editor, chat, terminal &mdash; press, speak, and it types straight into whatever holds your cursor.</p>
-        </div>
-        <div class="feature-row__art">
-          <div class="anyapp artifact">
-            <div class="anyapp__press">
-              <span class="hush-keys"><kbd>Ctrl</kbd><kbd>Space</kbd></span>
-              <span class="anyapp__hint">press anywhere</span>
-            </div>
-            <div class="anyapp__grid">
-              <div class="anyapp__win">
-                <div class="anyapp__bar"><i class="anyapp__dot"></i>Email</div>
-                <div class="anyapp__body">Hi team,<span class="anyapp__caret"></span></div>
-              </div>
-              <div class="anyapp__win anyapp__win--active">
-                <div class="anyapp__bar"><i class="anyapp__dot"></i>Editor</div>
-                <div class="anyapp__body">The draft reads<span class="anyapp__caret"></span></div>
-              </div>
-              <div class="anyapp__win">
-                <div class="anyapp__bar"><i class="anyapp__dot"></i>Chat</div>
-                <div class="anyapp__body">On my way<span class="anyapp__caret"></span></div>
-              </div>
-              <div class="anyapp__win">
-                <div class="anyapp__bar"><i class="anyapp__dot"></i>Terminal</div>
-                <div class="anyapp__body"><span class="anyapp__prompt">$</span> git commit<span class="anyapp__caret"></span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 3 · Fast, and private when you want -->
-      <article class="feature-row reveal">
-        <div class="feature-row__text">
-          <p class="feature-row__num">03</p>
-          <h3 class="feature-row__title">Fast, and private when you want.</h3>
-          <p class="feature-row__body">Dictate several times faster than you type. Pick cloud accuracy, or fully on-device local mode where your voice never leaves your machine.</p>
-        </div>
-        <div class="feature-row__art">
-          <div class="privacy">
-            <div class="artifact privacy__statcard">
-              <div class="hush-stat">
-                <span class="hush-stat__val">5&times;</span>
-                <span class="hush-stat__unit">faster than typing</span>
-              </div>
-            </div>
-            <div class="privacy__modes">
-              <div class="modeswitch" role="group" aria-label="Processing mode">
-                <span class="modeswitch__opt">Cloud</span>
-                <span class="modeswitch__opt is-on">Local</span>
-              </div>
-              <span class="hush-chip privacy__chip"><i class="hush-chip__dot"></i>LOCAL</span>
-              <p class="privacy__note">On&#8209;device &mdash; your voice never leaves your machine.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-
-    </div>
-  </div>
-</section>
-<!-- STATS (§V2-C) — day-by-day contribution graph, headline metrics, and a weekly line.
-     Fragment only (no html/head/body). Root <section id="stats" class="section stats"> on
-     --fog, using the WIDE container to fill big screens. Inserts AFTER Features, BEFORE Download.
-     app.js fills [data-contrib-grid], counts up [data-count] nums, and draws [data-usageline]. -->
-<section id="stats" class="section stats">
-  <div class="wrap wrap--wide">
-
-    <!-- Intro (kept at a comfortable reading measure) -->
-    <div class="stats__intro reveal">
-      <p class="eyebrow">Your numbers</p>
-      <h2 class="h stats__title">Watch your voice add up.</h2>
-      <p class="lead stats__lead">Every dictation is a little less typing. Here&rsquo;s a year of it &mdash; the days you spoke, the words that landed, and the hours you got back.</p>
-    </div>
-
-    <div class="stats__stack">
-
-      <!-- Contribution graph — the day-by-day part. [data-contrib-grid] is filled by app.js. -->
-      <div class="card contrib-card reveal">
-        <div class="contrib-card__head">
-          <h3 class="contrib-card__title"><span class="contrib-card__num">486,000</span> words this year</h3>
-          <p class="contrib-card__sub">Each square is a day. Brighter means more words.</p>
-        </div>
-        <div class="contrib" data-contrib><div class="contrib__grid" data-contrib-grid></div><div class="contrib__legend">Less <span data-level="0"></span><span data-level="1"></span><span data-level="2"></span><span data-level="3"></span><span data-level="4"></span> More</div></div>
-      </div>
-
-      <!-- Headline metrics (count up 0 → value on view; static text is the no-JS fallback) -->
-      <div class="stat-tiles reveal">
-        <div class="stat-tile">
-          <span class="stat-tile__num" data-count="486000">486,000</span>
-          <span class="stat-tile__label">Total words</span>
-        </div>
-        <div class="stat-tile">
-          <span class="stat-tile__num" data-count="128">128</span>
-          <span class="stat-tile__label">Day streak</span>
-        </div>
-        <div class="stat-tile">
-          <span class="stat-tile__num" data-count="138">138</span>
-          <span class="stat-tile__label">Words / min</span>
-        </div>
-        <div class="stat-tile">
-          <span class="stat-tile__num" data-count="94">94</span>
-          <span class="stat-tile__label">Hours saved</span>
-        </div>
-        <div class="stat-tile">
-          <span class="stat-tile__num" data-count="2940">2,940</span>
-          <span class="stat-tile__label">Sessions</span>
-        </div>
-      </div>
-
-      <!-- Words per week — app.js draws the path + area into [data-usageline]. -->
-      <div class="card usage-card reveal">
-        <div class="usage-card__head">
-          <h3 class="usage-card__title">Words per week</h3>
-          <p class="usage-card__sub">Fifty-two weeks of dictation, week over week.</p>
-        </div>
-        <div class="usage-card__plot">
-          <svg class="usageline" data-usageline viewBox="0 0 720 220" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-            <defs>
-              <linearGradient id="usagefill" x1="0" y1="0" x2="0" y2="1">
-                <stop class="usagefill__top" offset="0"></stop>
-                <stop class="usagefill__bot" offset="1"></stop>
-              </linearGradient>
-            </defs>
-            <line class="usageline__base" x1="0" y1="212" x2="720" y2="212"></line>
+      <article class="card reveal" style="--d:0ms">
+        <div class="card__art">
+          <svg class="ill" viewBox="0 0 240 132" aria-hidden="true">
+            <rect class="i-panel i-panel--back" x="8" y="20" width="98" height="68" rx="9"/>
+            <circle class="i-dot" cx="19" cy="31" r="2"/><circle class="i-dot" cx="26" cy="31" r="2"/>
+            <rect class="i-ln" x="18" y="45" width="50" height="5" rx="2.5"/>
+            <rect class="i-ln2" x="18" y="56" width="70" height="5" rx="2.5"/>
+            <rect class="i-ln2" x="18" y="67" width="36" height="5" rx="2.5"/>
+            <rect class="i-panel i-panel--back" x="134" y="20" width="98" height="68" rx="9"/>
+            <circle class="i-dot" cx="145" cy="31" r="2"/><circle class="i-dot" cx="152" cy="31" r="2"/>
+            <rect class="i-mint i-soft" x="144" y="45" width="16" height="5" rx="2.5"/><rect class="i-ln2" x="164" y="45" width="40" height="5" rx="2.5"/>
+            <rect class="i-ln2" x="152" y="56" width="52" height="5" rx="2.5"/>
+            <rect class="i-ln2" x="144" y="67" width="34" height="5" rx="2.5"/>
+            <rect class="i-panel i-panel--front" x="50" y="34" width="140" height="76" rx="10"/>
+            <path class="i-sep" d="M50.5 53h139"/>
+            <circle class="i-dot" cx="62" cy="43.5" r="2"/><circle class="i-dot" cx="69" cy="43.5" r="2"/><circle class="i-dot" cx="76" cy="43.5" r="2"/>
+            <rect class="i-ln" x="64" y="66" width="98" height="5" rx="2.5"/>
+            <rect class="i-ln" x="64" y="78" width="70" height="5" rx="2.5"/>
+            <rect class="i-mint i-caret" x="140" y="75.5" width="2.2" height="11" rx="1.1"/>
+            <rect class="i-pill" x="100" y="119" width="40" height="7" rx="3.5"/>
           </svg>
         </div>
-      </div>
+        <h3 class="card__title">Works in every app</h3>
+        <p class="card__text">One shortcut, everywhere. Hush pastes into whatever has your cursor: chat, email, editor, terminal.</p>
+      </article>
+
+      <article class="card reveal" style="--d:70ms">
+        <div class="card__art">
+          <svg class="ill" viewBox="0 0 240 132" aria-hidden="true">
+            <rect class="i-pill" x="70" y="10" width="100" height="30" rx="15"/>
+            <g class="i-bars" style="--cy:25">
+              <rect x="82.5" y="19" width="3" height="12" rx="1.5" style="--n:0"/>
+              <rect x="88.5" y="17" width="3" height="16" rx="1.5" style="--n:1"/>
+              <rect x="94.5" y="14" width="3" height="22" rx="1.5" style="--n:2"/>
+              <rect x="100.5" y="12" width="3" height="26" rx="1.5" style="--n:3"/>
+              <rect x="106.5" y="16" width="3" height="18" rx="1.5" style="--n:4"/>
+              <rect x="112.5" y="13" width="3" height="24" rx="1.5" style="--n:5"/>
+              <rect x="118.5" y="12" width="3" height="26" rx="1.5" style="--n:6"/>
+              <rect x="124.5" y="15" width="3" height="20" rx="1.5" style="--n:7"/>
+              <rect x="130.5" y="13" width="3" height="24" rx="1.5" style="--n:8"/>
+              <rect x="136.5" y="17" width="3" height="16" rx="1.5" style="--n:9"/>
+              <rect x="142.5" y="19" width="3" height="12" rx="1.5" style="--n:10"/>
+              <rect x="148.5" y="21" width="3" height="8" rx="1.5" style="--n:11"/>
+              <rect x="154.5" y="22" width="3" height="6" rx="1.5" style="--n:12"/>
+            </g>
+            <text class="i-label" x="120" y="55" text-anchor="middle">HOLD TO TALK</text>
+
+            <rect class="i-pill" x="40" y="68" width="160" height="36" rx="18"/>
+            <circle cx="58" cy="86" r="11" fill="#24272C"/>
+            <path d="M54.5 82.5l7 7M61.5 82.5l-7 7" stroke="#A2A6AD" stroke-width="1.6" stroke-linecap="round"/>
+            <g class="i-bars i-bars--hf" style="--cy:86">
+              <rect x="94.5" y="82" width="3" height="8" rx="1.5" style="--n:1"/>
+              <rect x="100.5" y="79" width="3" height="14" rx="1.5" style="--n:3"/>
+              <rect x="106.5" y="76" width="3" height="20" rx="1.5" style="--n:5"/>
+              <rect x="112.5" y="74" width="3" height="24" rx="1.5" style="--n:2"/>
+              <rect x="118.5" y="73" width="3" height="26" rx="1.5" style="--n:6"/>
+              <rect x="124.5" y="75" width="3" height="22" rx="1.5" style="--n:4"/>
+              <rect x="130.5" y="77" width="3" height="18" rx="1.5" style="--n:0"/>
+              <rect x="136.5" y="80" width="3" height="12" rx="1.5" style="--n:7"/>
+              <rect x="142.5" y="83" width="3" height="6" rx="1.5" style="--n:3"/>
+            </g>
+            <circle cx="182" cy="86" r="11" fill="#ECEDEF"/>
+            <rect x="178" y="82" width="8" height="8" rx="2" fill="#0B0C0E"/>
+            <text class="i-label" x="120" y="122" text-anchor="middle">HANDS-FREE</text>
+          </svg>
+        </div>
+        <h3 class="card__title">Hold or hands-free</h3>
+        <p class="card__text">Hold to talk and let go to send, or tap once to go hands-free and tap again to finish.</p>
+      </article>
+
+      <article class="card reveal" style="--d:140ms">
+        <div class="card__art">
+          <svg class="ill ill--filler" viewBox="0 0 240 132" aria-hidden="true">
+            <text class="i-label" x="221" y="22" text-anchor="end">YOU SAID</text>
+            <g class="i-mono">
+              <text x="19" y="42" class="i-raw">um so like we ship uh friday</text>
+            </g>
+            <rect class="i-strike" x="19" y="37.4" width="14.4" height="1.6" rx=".8" style="--n:0"/>
+            <rect class="i-strike" x="40.6" y="37.4" width="14.4" height="1.6" rx=".8" style="--n:1"/>
+            <rect class="i-strike" x="62.2" y="37.4" width="28.8" height="1.6" rx=".8" style="--n:2"/>
+            <rect class="i-strike" x="155.8" y="37.4" width="14.4" height="1.6" rx=".8" style="--n:3"/>
+            <path class="i-sep" d="M19 66h82M139 66h82"/>
+            <circle cx="120" cy="66" r="11" class="i-node"/>
+            <path d="M120 61v10M116.5 67.5l3.5 3.5 3.5-3.5" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <text class="i-label" x="221" y="92" text-anchor="end">YOU GET</text>
+            <text class="i-clean" x="19" y="112">We ship Friday.</text>
+            <rect class="i-mint i-caret" x="131" y="98" width="2.2" height="17" rx="1.1"/>
+          </svg>
+        </div>
+        <h3 class="card__title">Cleans up filler words</h3>
+        <p class="card__text">Ums, false starts and repeats disappear. Punctuation and capitals are handled for you.</p>
+      </article>
+
+      <article class="card reveal" style="--d:0ms">
+        <div class="card__art">
+          <svg class="ill" viewBox="0 0 240 132" aria-hidden="true">
+            <rect class="i-chip i-chip--auto" x="12" y="12" width="94" height="24" rx="12"/>
+            <circle class="i-mint" cx="26" cy="24" r="2.6"/>
+            <text class="i-mono i-chip-t" x="36" y="28">Kubernetes</text>
+            <rect class="i-chip" x="114" y="12" width="54" height="24" rx="12"/>
+            <text class="i-mono i-chip-t" x="141" y="28" text-anchor="middle">Priya</text>
+            <rect class="i-chip" x="176" y="12" width="52" height="24" rx="12"/>
+            <text class="i-mono i-chip-t" x="202" y="28" text-anchor="middle">Hush</text>
+
+            <rect class="i-panel i-panel--front" x="12" y="50" width="216" height="70" rx="12"/>
+            <rect class="i-cue" x="26" y="74" width="50" height="22" rx="11"/>
+            <text class="i-mono i-cue-t" x="51" y="89" text-anchor="middle">;sig</text>
+            <path d="M85 85h14M95 80.5l4.5 4.5-4.5 4.5" fill="none" stroke="var(--accent)" stroke-opacity=".7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <text class="i-body" x="110" y="80">Best regards,</text>
+            <text class="i-body" x="110" y="96">Sam Rivera</text>
+          </svg>
+        </div>
+        <h3 class="card__title">Personal dictionary &amp; snippets</h3>
+        <p class="card__text">Teach it names, jargon and acronyms. Say a short cue and get the full text back.</p>
+      </article>
+
+      <article class="card reveal" style="--d:70ms">
+        <div class="card__art">
+          <svg class="ill" viewBox="0 0 240 132" aria-hidden="true">
+            <rect class="i-row" x="12" y="10" width="216" height="32" rx="10"/>
+            <circle class="i-radio" cx="26" cy="26" r="4"/>
+            <text class="i-label i-label--l" x="36" y="29">FORMAL</text>
+            <text class="i-body i-body--s" x="104" y="30">Could we do Thursday?</text>
+
+            <rect class="i-row i-row--on" x="12" y="50" width="216" height="32" rx="10"/>
+            <circle class="i-radio i-radio--on" cx="26" cy="66" r="4"/><circle class="i-mint" cx="26" cy="66" r="1.8"/>
+            <text class="i-label i-label--l i-label--on" x="36" y="69">CASUAL</text>
+            <text class="i-body i-body--s i-body--on" x="104" y="70">Can we do Thursday?</text>
+
+            <rect class="i-row" x="12" y="90" width="216" height="32" rx="10"/>
+            <circle class="i-radio" cx="26" cy="106" r="4"/>
+            <text class="i-label i-label--l" x="36" y="109">VERY CASUAL</text>
+            <text class="i-body i-body--s" x="104" y="110">thursday instead?</text>
+          </svg>
+        </div>
+        <h3 class="card__title">Styles per context</h3>
+        <p class="card__text">Formal in email, relaxed in chat. Choose a tone for each kind of app you dictate into.</p>
+      </article>
+
+      <article class="card reveal" style="--d:140ms">
+        <div class="card__art">
+          <svg class="ill ill--private" viewBox="0 0 240 132" aria-hidden="true">
+            <circle class="i-ring i-ring--1" cx="120" cy="66" r="40"/>
+            <circle class="i-ring i-ring--2" cx="120" cy="66" r="40"/>
+            <g class="i-pins">
+              <rect x="106" y="34" width="4" height="6" rx="1"/><rect x="118" y="34" width="4" height="6" rx="1"/><rect x="130" y="34" width="4" height="6" rx="1"/>
+              <rect x="106" y="92" width="4" height="6" rx="1"/><rect x="118" y="92" width="4" height="6" rx="1"/><rect x="130" y="92" width="4" height="6" rx="1"/>
+              <rect x="90" y="50" width="6" height="4" rx="1"/><rect x="90" y="62" width="6" height="4" rx="1"/><rect x="90" y="74" width="6" height="4" rx="1"/>
+              <rect x="144" y="50" width="6" height="4" rx="1"/><rect x="144" y="62" width="6" height="4" rx="1"/><rect x="144" y="74" width="6" height="4" rx="1"/>
+            </g>
+            <rect class="i-panel i-panel--front" x="95" y="39" width="50" height="54" rx="12"/>
+            <circle class="i-mint" cx="110" cy="66" r="4.6"/>
+            <rect x="118" y="64.2" width="15" height="3.6" rx="1.8" fill="#ECEDEF"/>
+            <circle cx="148" cy="92" r="11" class="i-node"/>
+            <rect x="143.8" y="91" width="8.4" height="6.6" rx="1.8" fill="var(--accent)"/>
+            <path d="M145.6 91v-2.2a2.4 2.4 0 0 1 4.8 0V91" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round"/>
+            <g class="i-cloud">
+              <path d="M186 44a6 6 0 0 1 .8-11.9 8 8 0 0 1 15.2 1.6 5.2 5.2 0 0 1-.6 10.3z"/>
+              <path d="M184 50l24-24" class="i-cloud-x"/>
+            </g>
+          </svg>
+        </div>
+        <h3 class="card__title">Private on-device mode</h3>
+        <p class="card__text">Run recognition locally and your voice never leaves your PC. No account needed.</p>
+      </article>
 
     </div>
   </div>
 </section>
-<!-- DOWNLOAD (§5) — fragment. Root: <section id="download" class="section download">.
-     White CTA close. Links ONLY the two compiled installers. No source/repo links. -->
-<section id="download" class="section download">
+
+<!-- HOW IT WORKS -->
+<section class="section section--how" id="how">
   <div class="wrap">
+    <header class="section__head reveal">
+      <p class="eyebrow">How it works</p>
+      <h2 class="h2">Hold. Speak. Done.</h2>
+    </header>
 
-    <!-- Headline + primary action -->
-    <div class="download__head reveal">
-      <p class="eyebrow">Get started</p>
-      <h2 class="h-lg download__title">Get Hush for Windows.</h2>
-      <p class="lead download__lead">Free. Installs in seconds. Speak in your first minute.</p>
-
-      <div class="download__actions">
-        <a class="btn btn--fill download__cta" href="https://github.com/ShashankH1323/hush-web/releases/download/v1.0.6/Hush_1.0.6_x64-setup.exe" download data-download>
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg>
-          <span>Download for Windows</span>
-        </a>
-
-        <p class="download__meta">Version 1.0.6 · Windows 10 &amp; 11 · 64-bit · ~99&nbsp;MB · <a class="download__msi" href="https://github.com/ShashankH1323/hush-web/releases/download/v1.0.6/Hush_1.0.6_x64_en-US.msi" download>.msi installer</a></p>
-
-        <p class="download__note">
-          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
-          <span>Unsigned build — if Windows SmartScreen appears, choose “More info → Run anyway.”</span>
-        </p>
-      </div>
-    </div>
-
-    <!-- How to start: Install → Ctrl+Space → Speak -->
-    <ol class="download__steps reveal" aria-label="How to start">
-      <li class="download__step">
-        <div class="download__step-top">
-          <span class="download__step-num">1</span>
-          <span class="download__step-title">Install</span>
+    <ol class="steps reveal">
+      <li class="step">
+        <div class="step__viz step__viz--keys" aria-hidden="true">
+          <span class="keys keys--anim"><kbd class="kbd">Ctrl</kbd><kbd class="kbd">Shift</kbd><kbd class="kbd">Space</kbd></span>
         </div>
-        <p class="download__step-text">Run the installer and open Hush. No account, nothing to configure.</p>
+        <p class="step__n">01</p>
+        <h3 class="step__title">Hold the shortcut</h3>
+        <p class="step__text">Press Ctrl Shift Space in any app. Prefer hands-free? Tap Ctrl Space instead.</p>
       </li>
-      <li class="download__step">
-        <div class="download__step-top">
-          <span class="download__step-num">2</span>
-          <span class="download__step-title">Press <span class="hush-keys"><kbd>Ctrl</kbd><kbd>Space</kbd></span></span>
+      <li class="step">
+        <div class="step__viz" aria-hidden="true">
+          <svg class="mini-pill" viewBox="0 0 120 40">
+            <rect class="i-pill" x="4" y="3" width="112" height="34" rx="17"/>
+            <g class="i-bars" style="--cy:20">
+              <rect x="22.5" y="17" width="3" height="6" rx="1.5" style="--n:0"/><rect x="28.5" y="14" width="3" height="12" rx="1.5" style="--n:1"/>
+              <rect x="34.5" y="11" width="3" height="18" rx="1.5" style="--n:2"/><rect x="40.5" y="9" width="3" height="22" rx="1.5" style="--n:3"/>
+              <rect x="46.5" y="12" width="3" height="16" rx="1.5" style="--n:4"/><rect x="52.5" y="8" width="3" height="24" rx="1.5" style="--n:5"/>
+              <rect x="58.5" y="7" width="3" height="26" rx="1.5" style="--n:6"/><rect x="64.5" y="10" width="3" height="20" rx="1.5" style="--n:7"/>
+              <rect x="70.5" y="8" width="3" height="24" rx="1.5" style="--n:8"/><rect x="76.5" y="12" width="3" height="16" rx="1.5" style="--n:9"/>
+              <rect x="82.5" y="15" width="3" height="10" rx="1.5" style="--n:10"/><rect x="88.5" y="17" width="3" height="6" rx="1.5" style="--n:11"/>
+              <rect x="94.5" y="18" width="3" height="4" rx="1.5" style="--n:12"/>
+            </g>
+          </svg>
         </div>
-        <p class="download__step-text">Your global shortcut works in any window — email, editor, chat.</p>
+        <p class="step__n">02</p>
+        <h3 class="step__title">Speak naturally</h3>
+        <p class="step__text">Ums, restarts and run-on sentences are fine. Just say what you mean.</p>
       </li>
-      <li class="download__step">
-        <div class="download__step-top">
-          <span class="download__step-num">3</span>
-          <span class="download__step-title">Speak</span>
+      <li class="step">
+        <div class="step__viz" aria-hidden="true">
+          <p class="typed"><span class="typed__w" style="--w:0">Can</span><span class="typed__w" style="--w:1">we</span><span class="typed__w" style="--w:2">move</span><span class="typed__w" style="--w:3">the</span><span class="typed__w" style="--w:4">meeting</span><span class="typed__w" style="--w:5">to</span><span class="typed__w" style="--w:6">Thursday?</span><i class="caret"></i></p>
         </div>
-        <p class="download__step-text">Say what you mean. Hush types it back, cleaned up to read like you wrote it.</p>
+        <p class="step__n">03</p>
+        <h3 class="step__title">Text appears</h3>
+        <p class="step__text">Clean, punctuated text is pasted right where your cursor is. Nothing to copy.</p>
       </li>
     </ol>
-
-    <!-- The one peach accent card of the page — a quiet closing line -->
-    <aside class="accent download__accent reveal">
-      <p class="download__kicker">Voice dictation that writes like you</p>
-      <p class="download__tagline">Not raw transcription. Text you’d actually <span class="serif-i">send</span>.</p>
-    </aside>
-
   </div>
 </section>
+
+<!-- FINAL CTA -->
+<section class="cta" id="download">
+  <div class="wrap">
+    <div class="cta__panel reveal">
+      <svg class="cta__mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="12" r="3.25" fill="var(--accent)"/><rect x="11.5" y="10.6" width="9.5" height="2.8" rx="1.4" fill="currentColor"/></svg>
+      <h2 class="h2 cta__title">Download today.</h2>
+      <p class="cta__sub">Free for Windows 10 &amp; 11. Install it, hold the shortcut, start talking.</p>
+      <a class="btn btn--primary btn--lg" href="https://github.com/ShashankH1323/hush-web/releases/download/v1.0.6/Hush_1.0.6_x64-setup.exe" download data-download>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M3 3h8.5v8.5H3zM12.5 3H21v8.5h-8.5zM3 12.5h8.5V21H3zM12.5 12.5H21V21h-8.5z"/></svg>
+        Download for Windows
+      </a>
+      <p class="meta"><span data-version-text>Version 1.0.6</span><i class="meta__sep" aria-hidden="true"></i><span>Windows 10 &amp; 11</span><i class="meta__sep" aria-hidden="true"></i><span>~99 MB</span></p>
+      <p class="cta__note">Unsigned build. If Windows SmartScreen appears, choose <b>More info</b> then <b>Run anyway</b>.</p>
+      <p class="cta__links"><a class="link" href="https://github.com/ShashankH1323/hush-web/releases/download/v1.0.6/Hush_1.0.6_x64_en-US.msi" download data-msi>Get the .msi installer</a><button type="button" class="link link--btn" data-copy hidden>Copy SHA-256</button></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
 <footer class="footer">
   <div class="wrap footer__inner">
-    <div class="footer__brand">
-      <a class="footer__logo" href="#top">
-        <img src="assets/hush-icon-128.png" alt="" width="22" height="22">
-        <span>Hush</span>
+    <div class="footer__l">
+      <a class="logo logo--sm" href="#top" aria-label="Hush, back to top">
+        <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="12" r="3.25" fill="var(--accent)"/><rect x="11.5" y="10.6" width="9.5" height="2.8" rx="1.4" fill="currentColor"/></svg>
+        <span class="logo__word">hush</span>
       </a>
-      <p class="footer__tag">Voice dictation that writes like you.</p>
+      <span class="footer__copy">© <span data-year>2026</span> Hush</span>
     </div>
-    <nav class="footer__nav" aria-label="Footer">
-      <a class="footer__link" href="#features">Features</a>
-      <a class="footer__link" href="#stats">Stats</a>
-      <a class="footer__link" href="#download">Download</a>
-    </nav>
-  </div>
-  <div class="wrap footer__base">
-    <p class="footer__copy">© 2026 Hush</p>
+    <p class="footer__r"><span class="footer__ver" data-version-text>Version 1.0.6</span><span class="footer__priv">Private by design. On-device mode keeps your voice on your PC.</span></p>
   </div>
 </footer>
-<!-- ===== end sections ===== -->
+
 </body>
 </html>
