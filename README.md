@@ -14,7 +14,7 @@ version.json      update manifest polled by the desktop app (GET /version.json).
 vercel.json       cleanUrls + /downloads/:file redirect to the GitHub release
 ```
 
-Design: dark graphite (`#0B0C0E`), mint accent (`#5EEAD4`), Geist + Geist Mono, frosted-but-opaque surfaces. Tokens mirror `docs/redesign/SPEC.md` §1–2 in the Hush app repo. Animations use transform/opacity only and respect `prefers-reduced-motion`.
+Design: dark graphite (`#0B0C0E`), mint accent (`#5EEAD4`), Geist + Geist Mono, frosted-but-opaque surfaces. Animations use transform/opacity only and respect `prefers-reduced-motion`.
 
 ## Release contract (do not break)
 

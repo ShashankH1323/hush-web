@@ -1,4 +1,4 @@
-/* tokens.css — Hush site design tokens. Mirrors the app brand (docs/redesign/SPEC.md §1–2):
+/* tokens.css — Hush site design tokens. Mirrors the Hush app brand:
    dark cool graphite, mint accent, frosted-but-opaque surfaces. No cream, no beige, no warm off-white. */
 :root {
   color-scheme: dark;
