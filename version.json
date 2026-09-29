@@ -1,10 +1,10 @@
 {
-  "version": "1.0.6",
-  "name": "Hush 1.0.6",
-  "release_date": "2026-09-28",
-  "download_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.6/Hush_1.0.6_x64-setup.exe",
-  "msi_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.6/Hush_1.0.6_x64_en-US.msi",
+  "version": "1.0.7",
+  "name": "Hush 1.0.7",
+  "release_date": "2026-09-30",
+  "download_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.7/Hush_1.0.7_x64-setup.exe",
+  "msi_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.7/Hush_1.0.7_x64_en-US.msi",
   "website_url": "https://hush-web-alpha.vercel.app",
-  "notes": "Asset preflight verification, reform failover budget, taskbar auto-hide awareness, and primary keep-warm optimization.",
-  "sha256": "b38f1dc6a3fea99bfc694e329ba74d7422283a419e5de7f1c13b03bf09fc9152"
+  "notes": "Bug fixes and improvements.",
+  "sha256": "b1692299436c651f25c2c42b40abc73dfe064f63921549e59fed96ee63f9b253"
 }
