@@ -88,6 +88,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .btn--soft:hover { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .2); }
 /* Download button pair (Windows + macOS). Stacks on narrow screens. */
 .btns { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
+.btn-stack { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.btn__alt { font: 400 12.5px/1.4 var(--font-mono); color: var(--text-3); text-decoration: underline; text-underline-offset: 3px; }
+.btn__alt:hover { color: var(--text); }
+.btn__alt[hidden] { display: none; }
 /* macOS "Coming soon": same glass capsule, muted; no href, so it can never link to a 404. JS removes aria-disabled once a Mac asset exists. */
 .btn[aria-disabled="true"] { color: var(--text-2); cursor: not-allowed; }
 .btn[aria-disabled="true"] > svg { opacity: .7; }
