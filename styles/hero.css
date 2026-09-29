@@ -1,25 +1,26 @@
 /* hero.css — headline, subhead, CTA */
-.hero { position: relative; padding: clamp(24px, 4.5vh, 56px) 0 clamp(72px, 9vw, 120px); text-align: center; }
+.hero { position: relative; padding: clamp(28px, 5.5vh, 64px) 0 clamp(72px, 9vw, 120px); text-align: center; }
 .hero::before { /* faint hairline grid, masked to a soft ellipse */
   content: ""; position: absolute; left: 0; right: 0; top: calc(var(--nav-h) * -1); height: 760px; z-index: -1; pointer-events: none;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, .035) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, .035) 1px, transparent 1px);
+  background-image: linear-gradient(to right, rgba(255, 255, 255, .028) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, .028) 1px, transparent 1px);
   background-size: 72px 72px; background-position: center top;
   -webkit-mask-image: radial-gradient(ellipse 60% 62% at 50% 34%, #000 10%, transparent 72%);
   mask-image: radial-gradient(ellipse 60% 62% at 50% 34%, #000 10%, transparent 72%);
 }
 .hero__inner { display: flex; flex-direction: column; align-items: center; }
 .hero__title {
-  font-weight: 600; font-size: clamp(50px, 8.8vw, 100px); line-height: .98; letter-spacing: -.055em;
-  background: linear-gradient(180deg, #FFFFFF 10%, #B7BCC5 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
-  padding-bottom: .06em;
+  font-weight: 600; font-size: clamp(50px, 8.6vw, 98px); line-height: .98; letter-spacing: -.055em;
+  background: linear-gradient(180deg, #FFFFFF 18%, #A3A8B2 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  padding-bottom: .08em;
 }
-.hero__accent { background: linear-gradient(180deg, #9FF5E7 0%, var(--accent) 60%, #2FD1BB 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.hero__sub { margin-top: 22px; max-width: 44em; font-size: clamp(17px, 1.7vw, 20px); line-height: 1.5; color: var(--text-2); text-wrap: balance; }
+/* "It writes." stays in the grey family with only the faintest mint cast at the base. */
+.hero__accent { background: linear-gradient(180deg, #EEF3F3 8%, #A6BCB8 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero__sub { margin-top: 22px; max-width: 44em; font-size: clamp(17px, 1.7vw, 19px); line-height: 1.55; color: var(--text-2); text-wrap: balance; }
 .hero__cta { margin-top: 34px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-.demo { margin-top: clamp(36px, 4.6vw, 56px); }
+.demo { margin-top: clamp(40px, 5vw, 60px); }
 
 @media (max-width: 640px) {
   .hero__title span { display: block; }
   .hero__title { line-height: 1; font-size: clamp(48px, 15.5vw, 68px); }
-  .hero__cta .btn--lg { height: 54px; }
+  .hero__cta .btn--lg { height: 52px; }
 }

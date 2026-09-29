@@ -18,35 +18,62 @@
   if (!win || !textEl || !canvas || !canvas.getContext) { root.classList.add("is-ready"); return; }
 
   /* ---------------------------------------------------------------- scenes */
-  var svg = function (inner) {
-    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + "</svg>";
+  /* All scene markup is built with createElement / createElementNS / textContent: no innerHTML anywhere, so there is no HTML-injection sink. */
+  var SVG_NS = "http://www.w3.org/2000/svg";
+  var el = function (tag, cls, kids) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    (kids || []).forEach(function (k) { n.appendChild(typeof k === "string" ? document.createTextNode(k) : k); });
+    return n;
+  };
+  var sp = function (cls, text) { return el("span", cls, [text]); };
+  var icon = function (shapes) {
+    var svg = document.createElementNS(SVG_NS, "svg");
+    var attrs = { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "1.75", "stroke-linecap": "round", "stroke-linejoin": "round", "aria-hidden": "true" };
+    Object.keys(attrs).forEach(function (k) { svg.setAttribute(k, attrs[k]); });
+    shapes.forEach(function (sh) {
+      var n = document.createElementNS(SVG_NS, sh[0]);
+      Object.keys(sh[1]).forEach(function (k) { n.setAttribute(k, sh[1][k]); });
+      svg.appendChild(n);
+    });
+    return svg;
   };
   var ICON = {
-    chat: svg('<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.2A8 8 0 1 1 21 12z"/>'),
-    mail: svg('<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/>'),
-    code: svg('<path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12"/>')
+    chat: function () { return icon([["path", { d: "M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.2A8 8 0 1 1 21 12z" }]]); },
+    mail: function () { return icon([["rect", { x: "3", y: "5", width: "18", height: "14", rx: "2.5" }], ["path", { d: "m4 7 8 6 8-6" }]]); },
+    code: function () { return icon([["path", { d: "m8 8-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12" }]]); }
+  };
+  var kv = function (k, v) { return el("div", "kv", [el("span", null, [k]), el("b", null, [v])]); };
+  var ln = function (n, kids) { return el("div", null, [sp("ln", String(n))].concat(kids)); };
+  var CTX = {
+    chat: function () {
+      return [el("div", "msg msg--out", ["Sync on the launch plan Wednesday?"]), el("div", "msg msg--in", ["Wednesday is packed, sorry."])];
+    },
+    mail: function () { return [kv("To", "Priya Nair"), kv("Subject", "Proposal follow-up")]; },
+    code: function () {
+      return [el("div", "code", [
+        ln(1, [sp("k", "import"), " ", sp("p", "{"), " format ", sp("p", "}"), " ", sp("k", "from"), " ", sp("s", "\"date-fns\"")]),
+        ln(2, [sp("k", "export function"), " ", sp("f", "parseDate"), sp("p", "("), "input", sp("p", ":"), " ", sp("k", "string"), sp("p", ") {")]),
+        ln(3, ["  ", sp("k", "const"), " d ", sp("p", "="), " ", sp("k", "new"), " ", sp("f", "Date"), sp("p", "("), "input", sp("p", ")")])
+      ])];
+    }
   };
 
   /* words: [spoken, written]. written === null -> dropped (filler / repeat). */
   var SCENES = [
     {
-      id: "chat", app: "Messages", sub: "Sam Rivera", icon: ICON.chat, ph: "Message Sam Rivera",
-      ctx: '<div class="msg msg--out">Sync on the launch plan Wednesday?</div><div class="msg msg--in">Wednesday is packed, sorry.</div>',
+      id: "chat", app: "Messages", sub: "Sam Rivera", icon: ICON.chat, ph: "Message Sam Rivera", ctx: CTX.chat,
       words: [["um", null], ["so", null], ["like", null], ["can", "Can"], ["we", "we"], ["move", "move"], ["the", "the"],
               ["uh", null], ["meeting", "meeting"], ["to", "to"], ["thursday", "Thursday?"]]
     },
     {
-      id: "mail", app: "Mail", sub: "New message", icon: ICON.mail, ph: "Write your message",
-      ctx: '<div class="kv"><span>To</span><b>Priya Nair</b></div><div class="kv"><span>Subject</span><b>Proposal follow-up</b></div>',
+      id: "mail", app: "Mail", sub: "New message", icon: ICON.mail, ph: "Write your message", ctx: CTX.mail,
       words: [["hey", "Hi"], ["priya", "Priya,"], ["uh", null], ["just", "just"], ["following", "following"], ["up", "up"], ["on", "on"],
               ["the", "the"], ["the", null], ["proposal", "proposal."], ["i", "I"], ["think", "think"], ["we", "we"], ["can", "can"],
               ["like", null], ["start", "start"], ["on", "on"], ["monday", "Monday."]]
     },
     {
-      id: "code", app: "Editor", sub: "utils/date.ts", icon: ICON.code, ph: "Add a comment", mono: true, ln: "4",
-      ctx: '<div class="code"><div><span class="ln">1</span><span class="k">import</span> <span class="p">{</span> format <span class="p">}</span> <span class="k">from</span> <span class="s">"date-fns"</span></div>' +
-           '<div><span class="ln">2</span><span class="k">export function</span> <span class="f">parseDate</span><span class="p">(</span>input<span class="p">:</span> <span class="k">string</span><span class="p">) {</span></div>' +
-           '<div><span class="ln">3</span>  <span class="k">const</span> d <span class="p">=</span> <span class="k">new</span> <span class="f">Date</span><span class="p">(</span>input<span class="p">)</span></div></div>',
+      id: "code", app: "Editor", sub: "utils/date.ts", icon: ICON.code, ph: "Add a comment", mono: true, ln: "4", ctx: CTX.code,
       words: [["todo", "// TODO:"], ["uh", null], ["refactor", "refactor"], ["this", "this"], ["function", "function"], ["to", "to"],
               ["like", null], ["handle", "handle"], ["time", "time"], ["zones", "zones"], ["properly", "properly"]]
     }
@@ -56,6 +83,7 @@
   var U_W = 240, U_H = 64;                    // logical canvas size (pill units)
   var SIZE = { idle: [44, 8], rec: [112, 34] };  // SPEC §7: idle 44x8, push-to-talk 112x34
   var NBARS = 13;
+  var ACC = "124,207,192";                    // the site accent (soft mint), as r,g,b
   var BELL = [], PH = [], OM = [];
   for (var bi = 0; bi < NBARS; bi++) {
     BELL.push(Math.exp(-Math.pow((bi - 6) / 3.4, 2)) * 0.94 + 0.06);
@@ -124,16 +152,16 @@
       c.setTransform(s, 0, 0, s, 0, 0); c.clearRect(0, 0, U_W, U_H);
       var w = Math.max(this.w.x, 2), h = Math.max(this.h.x, 2), x = cx - w / 2, y = cy - h / 2, f = this.flash;
 
-      if (this.rec > 0.01 || f > 0.01) {          // soft mint glow while listening / on paste
-        c.save(); c.shadowColor = "rgba(94,234,212," + (0.2 * this.rec + 0.5 * f).toFixed(3) + ")";
-        c.shadowBlur = 26 * s; c.fillStyle = "rgba(14,15,18,1)"; capsule(c, x, y, w, h); c.fill(); c.restore();
+      if (this.rec > 0.01 || f > 0.01) {          // soft accent glow while listening / on paste
+        c.save(); c.shadowColor = "rgba(" + ACC + "," + (0.13 * this.rec + 0.38 * f).toFixed(3) + ")";
+        c.shadowBlur = 26 * s; c.fillStyle = "rgba(10,10,11,1)"; capsule(c, x, y, w, h); c.fill(); c.restore();
       }
       c.save();                                      // body + drop shadow
       c.shadowColor = "rgba(0,0,0,.5)"; c.shadowBlur = 16 * s; c.shadowOffsetY = 6 * s;
-      c.fillStyle = "rgb(" + Math.round(14 + f * 0.55 * 80) + "," + Math.round(15 + f * 0.55 * 219) + "," + Math.round(18 + f * 0.55 * 194) + ")";
+      c.fillStyle = "rgb(" + Math.round(10 + f * 0.4 * 114) + "," + Math.round(10 + f * 0.4 * 197) + "," + Math.round(11 + f * 0.4 * 181) + ")";
       capsule(c, x, y, w, h); c.fill(); c.restore();
       c.lineWidth = 1;
-      c.strokeStyle = f > 0.01 ? "rgba(94,234,212," + (0.12 + 0.75 * f).toFixed(3) + ")" : "rgba(255,255,255,.13)";
+      c.strokeStyle = f > 0.01 ? "rgba(" + ACC + "," + (0.12 + 0.6 * f).toFixed(3) + ")" : "rgba(255,255,255,.14)";
       capsule(c, x + 0.5, y + 0.5, w - 1, h - 1); c.stroke();
       if (h > 20) {                                  // inset top highlight
         c.strokeStyle = "rgba(255,255,255,.08)"; c.beginPath();
@@ -186,7 +214,9 @@
   var toks = [], caret = null, sceneIdx = 0;
 
   function renderScene(sc, finalState) {
-    appEl.textContent = sc.app; subEl.textContent = sc.sub; glyphEl.innerHTML = sc.icon; ctxEl.innerHTML = sc.ctx;
+    appEl.textContent = sc.app; subEl.textContent = sc.sub;
+    glyphEl.textContent = ""; glyphEl.appendChild(sc.icon());
+    ctxEl.textContent = ""; sc.ctx().forEach(function (n) { ctxEl.appendChild(n); });
     fieldEl.className = "field" + (sc.mono ? " field--code" : "");
     textEl.setAttribute("data-ln", sc.ln || "");
     textEl.textContent = "";

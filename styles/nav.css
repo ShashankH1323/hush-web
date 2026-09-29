@@ -2,12 +2,11 @@
 .nav {
   position: sticky; top: 0; z-index: 50; height: var(--nav-h);
   border-bottom: 1px solid transparent;
-  transition: background-color var(--dur-3) var(--ease-out), border-color var(--dur-3) var(--ease-out);
 }
 .nav::before { /* frosted layer fades in with opacity so we never animate backdrop-filter itself */
   content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0;
-  background: rgba(11, 12, 14, .82);
-  -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+  background: rgba(5, 5, 6, .66);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
   box-shadow: inset 0 -1px 0 var(--border);
   transition: opacity var(--dur-3) var(--ease-out);
 }
@@ -16,14 +15,15 @@
 .nav__right { display: flex; align-items: center; gap: 8px; }
 .nav__link { padding: 8px 12px; border-radius: var(--r-full); font-size: 14px; font-weight: 500; color: var(--text-2); transition: color var(--dur-2), background-color var(--dur-2); }
 .nav__link:hover { color: var(--text); background: rgba(255, 255, 255, .05); }
+.nav__link:focus-visible { border-radius: var(--r-full); }
 
-/* Logo: dot + line. On load the dot springs in, pulses once, then the line draws out (≤ 900ms). */
-.logo { display: inline-flex; align-items: center; gap: 8px; color: var(--text); border-radius: var(--r-sm); }
+/* Logo: dot + line. On load the dot springs in, pulses once, then the line draws out (max 900ms). Not a link: it is a mark. */
+.logo { display: inline-flex; align-items: center; gap: 8px; color: var(--text); }
 .logo__mark { width: 26px; height: 26px; overflow: visible; }
 .logo__word { font-weight: 600; font-size: 21px; line-height: 1; letter-spacing: -.03em; padding-bottom: 2px; }
 .logo--sm .logo__mark { width: 22px; height: 22px; }
 .logo--sm .logo__word { font-size: 18px; }
-.nav .logo__dot { transform-box: fill-box; transform-origin: center; animation: dot-in 620ms var(--ease-out) both; }
+.nav .logo__dot { transform-box: fill-box; transform-origin: center; animation: dot-in 620ms var(--ease-out) both; filter: drop-shadow(0 0 5px rgba(var(--accent-rgb), .55)); }
 .nav .logo__line { transform-box: fill-box; transform-origin: left center; animation: line-in 420ms var(--ease-out) 480ms both; }
 .nav .logo__word { animation: word-in 500ms var(--ease-out) 420ms both; }
 @keyframes dot-in { 0% { transform: scale(0); } 55% { transform: scale(1.22); } 78% { transform: scale(.94); } 100% { transform: scale(1); } }

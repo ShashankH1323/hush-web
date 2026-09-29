@@ -2,11 +2,14 @@
  * Vanilla, no libs, defer-loaded. Feature-detected; never throws on missing elements.
  *
  * Release contract (do not break — the release pipeline and the desktop updater depend on it):
- *  - index.html keeps STATIC download hrefs ending in x64-setup.exe / x64_en-US.msi and plain-text
- *    "Version X.Y.Z" strings; the release workflow rewrites them with regexes.
- *  - version.json (same origin, /version.json) is the update manifest the desktop app polls.
- *    Here it only progressively enhances the page: hrefs, version labels and the SHA-256 copy button
- *    are refreshed from it, and the static markup remains the fallback if the fetch fails. */
+ *  - index.html keeps STATIC download hrefs ending in x64-setup.exe and plain-text "Version X.Y.Z" strings;
+ *    the release workflow rewrites them with regexes.
+ *  - /version.json (same origin) is the update manifest the desktop app polls. Here it only progressively enhances
+ *    the page: download hrefs and version labels are refreshed from it, and the static markup remains the fallback
+ *    if the fetch fails or the manifest fails validation.
+ *
+ * Security: nothing from the manifest is ever parsed as HTML. Text goes through textContent; the download URL is
+ * only accepted if it is an https://github.com/ShashankH1323/hush-web/releases/download/... URL. */
 (function () {
   "use strict";
 
@@ -51,20 +54,29 @@
     });
   }
 
-  /* 4. Release manifest: refresh links / version / checksum from /version.json ------ */
-  var isHttps = function (u) { return typeof u === "string" && /^https:\/\//i.test(u); };
-  var isSemver = function (v) { return typeof v === "string" && /^\d+\.\d+\.\d+/.test(v); };
+  /* 4. Release manifest: refresh the download links and version labels from /version.json ------ */
+  var RELEASE_PREFIX = "/ShashankH1323/hush-web/releases/download/";
+  /* Returns the normalised URL string, or "" if it is not a GitHub release-asset installer link for this project.
+   * new URL() resolves ".." and "%2e%2e" segments, so the prefix check below runs on the final path. */
+  var safeDownload = function (u) {
+    if (typeof u !== "string" || u.length > 300) return "";
+    var url;
+    try { url = new URL(u); } catch (_) { return ""; }
+    if (url.protocol !== "https:" || url.hostname !== "github.com" || url.port !== "") return "";
+    if (url.username || url.password || url.search || url.hash) return "";
+    if (url.pathname.indexOf(RELEASE_PREFIX) !== 0 || !/x64-setup\.exe$/.test(url.pathname)) return "";
+    return url.href;
+  };
+  var safeVersion = function (v) { return typeof v === "string" && /^\d{1,4}\.\d{1,4}\.\d{1,4}$/.test(v) ? v : ""; };
+
   if (window.fetch) {
-    fetch("version.json", { cache: "no-cache" })
+    fetch("/version.json", { cache: "no-cache", credentials: "omit", referrerPolicy: "no-referrer" })
       .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error("version.json " + r.status)); })
       .then(function (v) {
         if (!v || typeof v !== "object") return;
-        if (isHttps(v.download_url)) qsa("[data-download]").forEach(function (a) { a.href = v.download_url; });
-        if (isHttps(v.msi_url)) qsa("[data-msi]").forEach(function (a) { a.href = v.msi_url; });
-        if (isSemver(v.version)) qsa("[data-version-text]").forEach(function (el) { el.textContent = "Version " + v.version; });
-        if (typeof v.sha256 === "string" && /^[a-f0-9]{64}$/i.test(v.sha256)) {
-          qsa("[data-copy]").forEach(function (b) { b.setAttribute("data-copy", v.sha256.toLowerCase()); b.hidden = false; });
-        }
+        var href = safeDownload(v.download_url), ver = safeVersion(v.version);
+        if (href) qsa("[data-download]").forEach(function (a) { a.href = href; });
+        if (ver) qsa("[data-version-text]").forEach(function (el) { el.textContent = "Version " + ver; });
       })
       .catch(function () { /* keep the static links */ });
   }
@@ -72,7 +84,7 @@
   /* 5. Download feedback: transient toast; never blocks the native download ------- */
   var toast = null, toastT = 0;
   d.addEventListener("click", function (e) {
-    var a = e.target.closest && e.target.closest("[data-download],[data-msi]");
+    var a = e.target.closest && e.target.closest("[data-download]");
     if (!a) return;                                   // no preventDefault: the href does the work
     if (!toast) { toast = d.createElement("div"); toast.className = "toast"; toast.setAttribute("role", "status"); d.body.appendChild(toast); }
     toast.textContent = "Starting your download…";
@@ -81,32 +93,6 @@
     toastT = setTimeout(function () { toast.classList.remove("is-on"); }, 2400);
   });
 
-  /* 6. Copy buttons (SHA-256) -------------------------------------------------------- */
-  d.addEventListener("click", function (e) {
-    var btn = e.target.closest && e.target.closest("[data-copy]");
-    if (!btn) return;
-    var text = btn.getAttribute("data-copy");
-    if (!text) return;
-    var label = btn.__label == null ? (btn.__label = btn.textContent) : btn.__label;
-    var flash = function () {
-      btn.textContent = "Copied";
-      clearTimeout(btn.__t);
-      btn.__t = setTimeout(function () { btn.textContent = label; }, 1600);
-    };
-    var legacy = function () {
-      try {
-        var ta = d.createElement("textarea");
-        ta.value = text; ta.setAttribute("readonly", "");
-        ta.style.cssText = "position:fixed;top:-9999px;left:-9999px;opacity:0;";
-        d.body.appendChild(ta); ta.select(); d.execCommand("copy"); ta.remove(); flash();
-      } catch (_) { /* nothing more to try */ }
-    };
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(flash, legacy);
-      else legacy();
-    } catch (_) { legacy(); }
-  });
-
-  /* 7. Footer year ------------------------------------------------------------------ */
+  /* 6. Footer year ------------------------------------------------------------------ */
   qsa("[data-year]").forEach(function (el) { el.textContent = String(new Date().getFullYear()); });
 })();

@@ -21,40 +21,48 @@ img, svg, canvas { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 [hidden] { display: none !important; }
-::selection { background: rgba(94, 234, 212, .28); color: #fff; }
+::selection { background: rgba(var(--accent-rgb), .24); color: #fff; }
 
+/* Focus ring: the accent, on outline (not box-shadow) so it can never be overridden by a component's own shadow. */
 :focus { outline: none; }
-:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); border-radius: var(--r-sm); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--r-sm); }
 
 .wrap { width: min(100% - var(--gutter) * 2, var(--wrap)); margin-inline: auto; }
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-.skip { position: fixed; left: 12px; top: -60px; z-index: 100; padding: 10px 14px; border-radius: var(--r-md); background: var(--accent); color: var(--accent-ink); font-weight: 500; transition: transform var(--dur-3) var(--ease-out); }
+.skip { position: fixed; left: 12px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: var(--r-full); background: var(--text); color: var(--bg); font-weight: 500; font-size: 14px; transition: transform var(--dur-3) var(--ease-out); }
 .skip:focus-visible { transform: translateY(72px); }
 
-/* ---------- Backdrop: two big faint blobs (accent @ ~7%, cool blue @ ~5%) ---------- */
+/* ---------- Backdrop: a few very dim, very soft glows so the glass surfaces have something to refract ---------- */
 .backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
 .blob { position: absolute; border-radius: 50%; will-change: transform; }
-.blob--a {
-  width: 980px; height: 980px; left: -260px; top: -380px;
-  background: radial-gradient(closest-side, rgba(94, 234, 212, .085), rgba(94, 234, 212, .03) 55%, transparent);
-  animation: drift-a 38s ease-in-out infinite alternate;
+.blob--a { /* cool slate, top centre: sits behind the headline and demo */
+  width: 1200px; height: 760px; left: 50%; top: -300px; margin-left: -600px;
+  background: radial-gradient(closest-side, rgba(146, 160, 200, .12), rgba(146, 160, 200, .04) 58%, transparent);
+  animation: drift-a 44s ease-in-out infinite alternate;
 }
-.blob--b {
-  width: 900px; height: 900px; right: -300px; bottom: -340px;
-  background: radial-gradient(closest-side, rgba(110, 168, 255, .07), rgba(110, 168, 255, .025) 55%, transparent);
-  animation: drift-b 46s ease-in-out infinite alternate;
+.blob--b { /* the accent, barely there, lower right */
+  width: 880px; height: 880px; right: -340px; bottom: -360px;
+  background: radial-gradient(closest-side, rgba(var(--accent-rgb), .065), rgba(var(--accent-rgb), .02) 58%, transparent);
+  animation: drift-b 52s ease-in-out infinite alternate;
 }
-@keyframes drift-a { to { transform: translate3d(140px, 90px, 0); } }
-@keyframes drift-b { to { transform: translate3d(-120px, -70px, 0); } }
+.blob--c { /* cool slate, lower left */
+  width: 820px; height: 820px; left: -320px; bottom: -240px;
+  background: radial-gradient(closest-side, rgba(120, 134, 190, .075), rgba(120, 134, 190, .025) 58%, transparent);
+  animation: drift-c 60s ease-in-out infinite alternate;
+}
+@keyframes drift-a { to { transform: translate3d(90px, 50px, 0); } }
+@keyframes drift-b { to { transform: translate3d(-100px, -60px, 0); } }
+@keyframes drift-c { to { transform: translate3d(110px, -50px, 0); } }
 
 /* ---------- Typography ---------- */
-.eyebrow { font: 500 12px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
-.h2 { font-weight: 600; font-size: clamp(34px, 5vw, 60px); line-height: 1.04; letter-spacing: -.045em; text-wrap: balance; color: var(--text); }
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; font: 500 12px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); }
+.eyebrow::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px rgba(var(--accent-rgb), .55); }
+.h2 {
+  font-weight: 600; font-size: clamp(34px, 5vw, 58px); line-height: 1.06; letter-spacing: -.045em; text-wrap: balance; padding-bottom: .06em;
+  background: linear-gradient(180deg, #FFFFFF 20%, #A9AEB8 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
 .meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 0; font: 400 12px/1.4 var(--font-mono); letter-spacing: 0; color: var(--text-3); font-variant-numeric: tabular-nums; }
 .meta__sep { display: inline-block; width: 3px; height: 3px; margin: 0 12px; border-radius: 50%; background: var(--text-4); }
-.link { color: var(--text-2); text-decoration: underline; text-decoration-color: rgba(255, 255, 255, .22); text-underline-offset: 3px; transition: color var(--dur-2), text-decoration-color var(--dur-2); }
-.link:hover { color: var(--accent); text-decoration-color: var(--accent-line); }
-.link--btn { font: inherit; }
 
 /* ---------- Buttons (capsule, like the Hush bar) ---------- */
 .btn {
@@ -62,67 +70,69 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   height: 44px; padding: 0 22px; border-radius: var(--r-full);
   font: 500 15px/1 var(--font-sans); letter-spacing: -.01em; white-space: nowrap;
   border: 1px solid transparent;
-  transition: transform var(--dur-1) var(--ease-out), background-color var(--dur-2), color var(--dur-2), border-color var(--dur-2);
+  transition: transform var(--dur-1) var(--ease-out), background-color var(--dur-2), color var(--dur-2), border-color var(--dur-2), box-shadow var(--dur-3) var(--ease-out);
   -webkit-tap-highlight-color: transparent;
 }
-.btn:active { transform: scale(.97); }
-.btn:focus-visible { border-radius: var(--r-full); }
-.btn--lg { height: 56px; padding: 0 30px; font-size: 17px; gap: 12px; }
-.btn--sm { height: 36px; padding: 0 16px; font-size: 14px; }
+.btn:active { transform: scale(.975); }
+.btn:focus-visible { border-radius: var(--r-full); outline-offset: 4px; }
+.btn--lg { height: 54px; padding: 0 30px; font-size: 16px; gap: 12px; }
+.btn--sm { height: 34px; padding: 0 16px; font-size: 13.5px; }
+/* Primary: white on black. Quiet, high-contrast, no colour. */
 .btn--primary {
-  background: var(--accent); color: var(--accent-ink);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 0 0 1px rgba(94, 234, 212, .55), 0 10px 32px -8px rgba(94, 234, 212, .5);
-  overflow: hidden; isolation: isolate;
+  background: linear-gradient(180deg, #FFFFFF, #E4E6EA); color: #08090A;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 0 0 1px rgba(255, 255, 255, .14), 0 10px 30px -12px rgba(255, 255, 255, .35);
 }
-.btn--primary::after { /* soft light sweep on hover — transform only */
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, .5) 50%, transparent 70%);
-  transform: translateX(-120%);
-}
-.btn--primary:hover { background: var(--accent-hover); }
-.btn--primary:hover::after { transform: translateX(120%); transition: transform .8s var(--ease-out); }
-.btn--soft { background: var(--accent-soft); color: var(--accent); border-color: rgba(94, 234, 212, .22); }
-.btn--soft:hover { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn--primary:hover { background: linear-gradient(180deg, #FFFFFF, #EEF0F2); box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(255, 255, 255, .2), 0 12px 38px -10px rgba(255, 255, 255, .45); }
+/* Soft: glass capsule for the nav. */
+.btn--soft { background: var(--glass); color: var(--text); border-color: var(--border-strong); box-shadow: var(--glass-hi); }
+.btn--soft:hover { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .2); }
 
 /* ---------- Keycaps ---------- */
 .keys { display: inline-flex; gap: 6px; vertical-align: middle; }
 .kbd {
   display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 28px; padding: 0 10px;
   border-radius: 8px; font: 500 12px/1 var(--font-mono); letter-spacing: 0; color: var(--text-2);
-  background: linear-gradient(#25282D, #1B1D21); border: 1px solid var(--border-strong);
-  box-shadow: 0 2px 0 rgba(0, 0, 0, .6), inset 0 1px 0 rgba(255, 255, 255, .07);
-  transition: transform var(--dur-1) var(--ease-out), color var(--dur-1), border-color var(--dur-1);
+  background: linear-gradient(rgba(255, 255, 255, .07), rgba(255, 255, 255, .03)); border: 1px solid var(--border-strong);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, .7), inset 0 1px 0 rgba(255, 255, 255, .07);
+  transition: transform var(--dur-1) var(--ease-out), color var(--dur-1), border-color var(--dur-1), box-shadow var(--dur-2);
 }
-.kbd.is-down { transform: translateY(2px); color: var(--accent); border-color: rgba(94, 234, 212, .55); box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 18px rgba(94, 234, 212, .18), inset 0 1px 0 rgba(255, 255, 255, .05); }
+.kbd.is-down { transform: translateY(2px); color: var(--text); border-color: rgba(var(--accent-rgb), .5); box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 16px rgba(var(--accent-rgb), .14), inset 0 1px 0 rgba(255, 255, 255, .05); }
 
 /* ---------- Reveal on scroll (IntersectionObserver adds .is-in) ---------- */
 .js .reveal { opacity: 0; translate: 0 18px; transition: opacity .8s var(--ease-out) var(--d, 0ms), translate .8s var(--ease-out) var(--d, 0ms); }
 .js .reveal.is-in { opacity: 1; translate: 0 0; }
+.reveal--0 { --d: 0ms; } .reveal--1 { --d: 70ms; } .reveal--2 { --d: 140ms; }
 
-/* Hero entrance (CSS-only, staggered) */
-.rise { animation: rise .9s var(--ease-out) both; animation-delay: calc(var(--i, 0) * 90ms + 120ms); }
+/* Hero entrance (CSS-only, staggered). Fill is `backwards` only, so once it ends nothing keeps the element in an
+   opacity/transform effect: that keeps the glass demo window able to see the page backdrop through its blur. */
+.rise { animation: rise .9s var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 90ms + 120ms); }
+.rise--0 { --i: 0; } .rise--1 { --i: 1; } .rise--2 { --i: 2; } .rise--3 { --i: 3; }
 @keyframes rise { from { opacity: 0; translate: 0 16px; } to { opacity: 1; translate: 0 0; } }
+
+/* Index helpers for staggered SVG / word animations (replace inline style="--n:.." so the CSP can forbid inline styles) */
+.n0 { --n: 0; } .n1 { --n: 1; } .n2 { --n: 2; } .n3 { --n: 3; } .n4 { --n: 4; } .n5 { --n: 5; } .n6 { --n: 6; }
+.n7 { --n: 7; } .n8 { --n: 8; } .n9 { --n: 9; } .n10 { --n: 10; } .n11 { --n: 11; } .n12 { --n: 12; }
+.w0 { --w: 0; } .w1 { --w: 1; } .w2 { --w: 2; } .w3 { --w: 3; } .w4 { --w: 4; } .w5 { --w: 5; } .w6 { --w: 6; }
 
 /* ---------- Download toast ---------- */
 .toast {
   position: fixed; left: 50%; bottom: 28px; z-index: 60; display: inline-flex; align-items: center; gap: 10px;
   padding: 12px 18px 12px 14px; border-radius: var(--r-full); font: 500 14px/1 var(--font-sans);
-  background: var(--surface); border: 1px solid var(--border-strong);
-  box-shadow: inset 0 1px 0 var(--highlight), var(--shadow-pop);
-  -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+  background: rgba(20, 21, 24, .72); border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-hi), var(--shadow-pop);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
   opacity: 0; transform: translate(-50%, 12px); pointer-events: none;
   transition: opacity .25s var(--ease-out), transform .25s var(--ease-out);
 }
-.toast::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+.toast::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px rgba(var(--accent-rgb), .6); }
 .toast.is-on { opacity: 1; transform: translate(-50%, 0); }
 
 /* ---------- Reduced motion: keep fades, drop movement ---------- */
 @media (prefers-reduced-motion: reduce) {
   .blob { animation: none; }
   .js .reveal { translate: 0 0; transition: opacity .5s linear var(--d, 0ms); }
-  .rise { animation: fade .6s linear both; animation-delay: calc(var(--i, 0) * 60ms); }
+  .rise { animation: fade .6s linear backwards; animation-delay: calc(var(--i, 0) * 60ms); }
   @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
   .btn:active { transform: none; }
-  .btn--primary:hover::after { transition: none; }
   .toast { transform: translate(-50%, 0); }
 }

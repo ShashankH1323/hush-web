@@ -1,38 +1,52 @@
-/* tokens.css — Hush site design tokens. Mirrors the Hush app brand:
-   dark cool graphite, mint accent, frosted-but-opaque surfaces. No cream, no beige, no warm off-white. */
+/* tokens.css — Hush site design tokens.
+   True-black base, cool neutral greys, ONE quiet mint accent used only for small highlights (logo dot, focus, caret, glows),
+   and very light glass (about 5% white + 16px blur + hairline) for windows and cards. No cream, no beige, no warm off-white. */
+
+/* Self-hosted Geist + Geist Mono (SIL OFL 1.1, see assets/fonts/OFL.txt). Latin subset, variable weight. */
+@font-face {
+  font-family: "Geist"; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url("../assets/fonts/geist-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Geist Mono"; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url("../assets/fonts/geist-mono-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   color-scheme: dark;
 
   /* Surfaces */
-  --bg: #0B0C0E;
-  --bg-rail: #0F1013;
-  --surface: rgba(24, 26, 30, .9);
-  --surface-2: rgba(34, 37, 42, .92);
-  --surface-3: #2A2D33;
-  --pill-bg: rgba(14, 15, 18, .94);
+  --bg: #050506;
+  --bg-2: #0A0A0B;
+
+  /* Glass: ~5% white fill, hairline border, faint inset top highlight. The blur lives on a background layer,
+     never on an ancestor of the demo canvas. */
+  --glass: rgba(255, 255, 255, .05);
+  --glass-border: rgba(255, 255, 255, .08);
+  --glass-hi: inset 0 1px 0 rgba(255, 255, 255, .06);
+  --glass-blur: blur(16px) saturate(1.2);
 
   /* Hairlines */
   --border: rgba(255, 255, 255, .07);
-  --border-strong: rgba(255, 255, 255, .13);
-  --highlight: rgba(255, 255, 255, .05);
+  --border-strong: rgba(255, 255, 255, .12);
 
-  /* Text (cool neutrals). --text-3 is a touch lighter than the app's #6A6F77 so meta copy clears AA on the site. */
-  --text: #ECEDEF;
-  --text-2: #A2A6AD;
-  --text-3: #848994;
-  --text-4: #6A6F77;
+  /* Text (cool neutrals). --text-3 clears AA on the black base; --text-4 is decorative only. */
+  --text: #EDEEF0;
+  --text-2: #A0A4AC;
+  --text-3: #7E838D;
+  --text-4: #5A5F69;
 
-  /* Accent */
-  --accent: #5EEAD4;
-  --accent-hover: #7FF0DE;
-  --accent-ink: #04201C;
-  --accent-soft: rgba(94, 234, 212, .12);
-  --accent-line: rgba(94, 234, 212, .32);
-  --cool: #6EA8FF;
+  /* The one accent: a soft, slightly desaturated mint. */
+  --accent: #7CCFC0;
+  --accent-rgb: 124, 207, 192;
+  --accent-soft: rgba(124, 207, 192, .10);
+  --accent-line: rgba(124, 207, 192, .28);
 
   /* Shadows */
-  --shadow-1: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .28);
-  --shadow-pop: 0 18px 50px rgba(0, 0, 0, .55);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, .4), 0 18px 40px -18px rgba(0, 0, 0, .7);
+  --shadow-pop: 0 18px 50px rgba(0, 0, 0, .6);
 
   /* Radii */
   --r-xs: 6px; --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 22px; --r-2xl: 28px; --r-full: 999px;
@@ -42,12 +56,9 @@
   --ease-in-out: cubic-bezier(.65, 0, .35, 1);
   --dur-1: 120ms; --dur-2: 180ms; --dur-3: 260ms; --dur-4: 420ms;
 
-  /* Frost, not glass */
-  --blur: blur(24px) saturate(1.4);
-
   /* Type */
-  --font-sans: "Geist", "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI Variable", "Segoe UI", Roboto, sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Variable", ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI Variable", "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
 
   /* Layout */
   --wrap: 1120px;
