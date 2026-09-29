@@ -1,10 +1,10 @@
 {
-  "version": "1.0.7",
-  "name": "Hush 1.0.7",
+  "version": "1.0.8",
+  "name": "Hush 1.0.8",
   "release_date": "2026-09-30",
-  "download_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.7/Hush_1.0.7_x64-setup.exe",
-  "msi_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.7/Hush_1.0.7_x64_en-US.msi",
+  "download_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.8/Hush_1.0.8_x64-setup.exe",
+  "msi_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.8/Hush_1.0.8_x64_en-US.msi",
   "website_url": "https://hush-web-alpha.vercel.app",
   "notes": "Bug fixes and improvements.",
-  "sha256": "b1692299436c651f25c2c42b40abc73dfe064f63921549e59fed96ee63f9b253"
+  "sha256": "20de8065c6c1d91188e143637d776564692fde5af70acb5f65e8597c55eafdf3"
 }
