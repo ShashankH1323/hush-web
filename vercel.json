@@ -3,7 +3,7 @@
   "redirects": [
     {
       "source": "/downloads/:file",
-      "destination": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.9/:file",
+      "destination": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.10/:file",
       "permanent": false
     }
   ],
