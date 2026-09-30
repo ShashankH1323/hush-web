@@ -7,8 +7,8 @@
   "website_url": "https://hush-web-alpha.vercel.app",
   "notes": "Bug fixes and improvements.",
   "sha256": "02a572c0a4f8c608f0964efc529d0c3b0f3d539cb9c7133e44707fd1fec415b4",
-  "mac_arm64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.11/Hush_1.0.11_aarch64.dmg",
-  "mac_arm64_sha256": "93766b36d39c0eecbd6b82919c022e14e338255fa55722df14de3fb97a5a7718",
-  "mac_x64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.11/Hush_1.0.11_x64.dmg",
-  "mac_x64_sha256": "fed860e6215ac2029b70c37e1829cb15f73ebe8ceac1e73326c9cde2f594bfdb"
+  "mac_arm64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.12/Hush_1.0.12_aarch64.dmg",
+  "mac_arm64_sha256": "3b9516d09597091018203f523733655313476b3335dba6c6b0532de729b4197a",
+  "mac_x64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.12/Hush_1.0.12_x64.dmg",
+  "mac_x64_sha256": "8738a0806f8ff5394fe19e84f7bae28f72d3b6ecf306a3005a052f701cfc8513"
 }
