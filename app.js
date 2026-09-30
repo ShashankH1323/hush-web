@@ -92,6 +92,7 @@
       if (macUrl && macIntelUrl) { a.href = macIntelUrl; a.setAttribute("download", ""); a.hidden = false; }
       else a.hidden = true;
     });
+    qsa("[data-mac-note]").forEach(function (el) { el.hidden = !macUrl; });   // unsigned build: how to open it
     if (!isMac) return;
     if (macUrl) { winBtns.forEach(function (a) { setPrimary(a, false); }); macBtns.forEach(function (a) { setPrimary(a, true); }); }
     if (navBtn) {                                     // never hand a Mac visitor the .exe from the nav button
