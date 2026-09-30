@@ -10,8 +10,8 @@
  *
  *  - macOS: the release workflow adds exactly two keys to /version.json: mac_arm64_url (Apple Silicon) and mac_x64_url (Intel),
  *    each a .dmg release asset. The Mac buttons are static, href-less "Coming soon" placeholders until one of them exists.
- *    Browsers can't reliably tell Apple Silicon from Intel, so "Download for macOS" links to mac_arm64_url and a small
- *    "Intel Mac? Download here" link (data-download-mac-intel) under it links to mac_x64_url, shown only when that key exists.
+ *    Browsers can't reliably tell Apple Silicon from Intel, so "Download for macOS" links to mac_arm64_url by default.
+ *    On Chromium the CPU architecture is read, so Intel Macs get mac_x64_url instead.
  *    Neither key => the button stays disabled and never links to a 404.
  *
  * Security: nothing from the manifest is ever parsed as HTML. Text goes through textContent; the download URL is
@@ -81,18 +81,13 @@
   var winBtns = qsa("[data-download-win]"), macBtns = qsa("[data-download-mac]"), navBtn = d.querySelector("[data-nav-dl]");
   var plat = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
   var isMac = /^mac/i.test(plat) && !(navigator.maxTouchPoints > 1);      // iPadOS reports "MacIntel" but has touch
-  var macUrl = "", macIntelUrl = "";                  // Apple Silicon (mac_arm64_url) / Intel (mac_x64_url)
+  var macUrl = "";                                    // Apple Silicon (mac_arm64_url), or Intel (mac_x64_url) for Intel Macs
   var setPrimary = function (a, on) { a.classList.toggle("btn--primary", on); a.classList.toggle("btn--soft", !on); };
   var applyOS = function () {
     if (macUrl) macBtns.forEach(function (a) {
       a.href = macUrl; a.setAttribute("download", ""); a.removeAttribute("aria-disabled");
       var tag = a.querySelector("[data-mac-tag]"); if (tag) tag.remove();
     });
-    qsa("[data-download-mac-intel]").forEach(function (a) {
-      if (macUrl && macIntelUrl) { a.href = macIntelUrl; a.setAttribute("download", ""); a.hidden = false; }
-      else a.hidden = true;
-    });
-    qsa("[data-mac-note]").forEach(function (el) { el.hidden = !macUrl; });   // unsigned build: how to open it
     if (!isMac) return;
     if (macUrl) { winBtns.forEach(function (a) { setPrimary(a, false); }); macBtns.forEach(function (a) { setPrimary(a, true); }); }
     if (navBtn) {                                     // never hand a Mac visitor the .exe from the nav button
@@ -111,9 +106,14 @@
         if (href) qsa("[data-download]").forEach(function (a) { a.href = href; });
         if (ver) qsa("[data-version-text]").forEach(function (el) { el.textContent = "Version " + ver; });
         var arm = safeMac(v.mac_arm64_url), x64 = safeMac(v.mac_x64_url);
-        macUrl = arm || x64;                               // the main Mac button is Apple Silicon; Intel only if that is all there is
-        macIntelUrl = arm ? x64 : "";                      // the secondary Intel link is shown only next to a distinct Apple Silicon button
-        applyOS();
+        macUrl = arm || x64;                               // one Mac button: Apple Silicon by default
+        var uad = navigator.userAgentData;                 // Chromium reports the CPU; Intel Macs get the x64 build
+        if (arm && x64 && isMac && uad && uad.getHighEntropyValues) {
+          uad.getHighEntropyValues(["architecture"])
+            .then(function (h) { if (h && h.architecture === "x86") macUrl = x64; })
+            .catch(function () {})
+            .then(applyOS);
+        } else applyOS();
       })
       .catch(function () { /* keep the static links */ });
   }
@@ -121,7 +121,7 @@
   /* 5. Download feedback: transient toast; never blocks the native download (skipped for non-download links) ------- */
   var toast = null, toastT = 0;
   d.addEventListener("click", function (e) {
-    var a = e.target.closest && e.target.closest("[data-download], [data-download-mac], [data-download-mac-intel]");
+    var a = e.target.closest && e.target.closest("[data-download], [data-download-mac]");
     if (!a || !a.hasAttribute("href") || !a.hasAttribute("download")) return;                                   // no preventDefault: the href does the work
     if (!toast) { toast = d.createElement("div"); toast.className = "toast"; toast.setAttribute("role", "status"); d.body.appendChild(toast); }
     toast.textContent = "Starting your download…";

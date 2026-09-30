@@ -92,8 +92,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .btn__alt { font: 400 12.5px/1.4 var(--font-mono); color: var(--text-3); text-decoration: underline; text-underline-offset: 3px; }
 .btn__alt:hover { color: var(--text); }
 .btn__alt[hidden] { display: none; }
-.btn__note { margin: 2px 0 0; max-width: 34ch; font: 400 12px/1.45 var(--font-mono); color: var(--text-3); text-align: center; }
-.btn__note[hidden] { display: none; }
 /* macOS "Coming soon": same glass capsule, muted; no href, so it can never link to a 404. JS removes aria-disabled once a Mac asset exists. */
 .btn[aria-disabled="true"] { color: var(--text-2); cursor: not-allowed; }
 .btn[aria-disabled="true"] > svg { opacity: .7; }
