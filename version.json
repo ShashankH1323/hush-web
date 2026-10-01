@@ -7,8 +7,8 @@
   "website_url": "https://hush-web-alpha.vercel.app",
   "notes": "Much faster: your text now appears about a second after you stop talking. Formal and Structured styles now really format what you say. A new Home screen shows your day at a glance, with your two latest dictations ready to copy or retry. You can always see when Hush is listening, on every page. New, gentler sounds tell you when it starts, stops, pastes or needs your attention (pick Chime, Soft or Click in Settings). The floating bar is back when the window is closed, the app opens faster, and the Scratchpad is one click away everywhere.",
   "sha256": "d87083113827e0b414fd56d1ef6ce5773f5303673725e441c3df59f4ceb23c45",
-  "mac_arm64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.12/Hush_1.0.12_aarch64.dmg",
-  "mac_arm64_sha256": "3b9516d09597091018203f523733655313476b3335dba6c6b0532de729b4197a",
-  "mac_x64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.0.12/Hush_1.0.12_x64.dmg",
-  "mac_x64_sha256": "8738a0806f8ff5394fe19e84f7bae28f72d3b6ecf306a3005a052f701cfc8513"
+  "mac_arm64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.1.0/Hush_1.1.0_aarch64.dmg",
+  "mac_arm64_sha256": "6de1f3c4bc42ea2a0e5bb8f99af3e02990c142683e612241c3064677eb76cc5f",
+  "mac_x64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.1.0/Hush_1.1.0_x64.dmg",
+  "mac_x64_sha256": "068e6a6f4c3fd4a0a84ffd389427fb98f4bad761cea92dfca84289d241feb6bc"
 }
