@@ -7,8 +7,8 @@
   "website_url": "https://hush-web-alpha.vercel.app",
   "notes": "Scratchpad folders: group your notes by project, drag them into any order, and choose whether the shortcut opens your last note or a new one. Voice Commands have their own page in the sidebar. Clean-up now reads your whole dictation, so the text comes out coherent and properly paragraphed. Hindi, Kannada and Telugu work much better, and what you say in them is written out in English. Kannada and Telugu are now in the language list.",
   "sha256": "e790e311d357ae7b1bfcdc8ef756cb797da7b2f0ef23b74737ea882cacf6dbef",
-  "mac_arm64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.1.0/Hush_1.1.0_aarch64.dmg",
-  "mac_arm64_sha256": "6de1f3c4bc42ea2a0e5bb8f99af3e02990c142683e612241c3064677eb76cc5f",
-  "mac_x64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.1.0/Hush_1.1.0_x64.dmg",
-  "mac_x64_sha256": "068e6a6f4c3fd4a0a84ffd389427fb98f4bad761cea92dfca84289d241feb6bc"
+  "mac_arm64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.2.0/Hush_1.2.0_aarch64.dmg",
+  "mac_arm64_sha256": "dd0c847a5e8944d76e92628838dd4abc452cf8ecc7ce1808f0c52ce4e2201ac4",
+  "mac_x64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.2.0/Hush_1.2.0_x64.dmg",
+  "mac_x64_sha256": "acd8c06d3233ef2729908e14ef1008dd386add457ed27f15da026f9a87910ae5"
 }
