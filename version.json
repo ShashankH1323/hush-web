@@ -7,8 +7,8 @@
   "website_url": "https://hush-web-alpha.vercel.app",
   "notes": "Voice commands are smarter: start a list anywhere while you talk, as many as you like in one go, and each gets its own heading. Say \"these are my physics to-dos: ...\", then \"these are my maths to-dos: ...\", then \"that's it\" to carry on normally. New Projects page: as you dictate, Hush learns the projects you work on and keeps one ready-to-paste prompt for each, kept up to date in the background (unlocks after 10,000 words; free during beta). Setup now shows you how to speak in Hindi or another language and pick the language your text is written in, and lets you practise voice commands like \"make this structured\" and \"make this formal\".",
   "sha256": "58f9467f3f9ac7bf4d6898ae8efd4be7659829c3b33db6597e4d141cf04af90f",
-  "mac_arm64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.3.0/Hush_1.3.0_aarch64.dmg",
-  "mac_arm64_sha256": "8f94d8a6f541e269ebf3dee97487ae7f40cba050457d9fe3ab2a54cfd318e488",
-  "mac_x64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.3.0/Hush_1.3.0_x64.dmg",
-  "mac_x64_sha256": "3f3479053cb0377683bdd3d3c67624e8a53a98dacd4842db3ffffa1602850325"
+  "mac_arm64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.4.0/Hush_1.4.0_aarch64.dmg",
+  "mac_arm64_sha256": "ed8425afbc8567b1211953f54b4bdb928a81f67d380a1980c0453742490b7185",
+  "mac_x64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.4.0/Hush_1.4.0_x64.dmg",
+  "mac_x64_sha256": "73865161d9d79ee3c3852d198791e90bdf225e0f8beacb4a7ef802b02d126988"
 }
