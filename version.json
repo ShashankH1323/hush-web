@@ -7,8 +7,8 @@
   "website_url": "https://hush-web-alpha.vercel.app",
   "notes": "Much better transcription: a more accurate speech model, automatic language detection, and a new Output language setting, so whatever language you speak, your text comes out in the language you pick. Changes of mind (\"it's not Thursday, let's do Friday\") and spoken commands like \"make this a to-do list\" are now carried out instead of typed. Updates now announce themselves with a notification and a one-click Install on Home, and install quietly without an installer window. New app icon that matches the app. A warning if your microphone records at phone-call quality.",
   "sha256": "bf3d366832887e0ef048c5c45300282868c35a38e5e6f179ff6ae5bf2bc59edf",
-  "mac_arm64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.2.0/Hush_1.2.0_aarch64.dmg",
-  "mac_arm64_sha256": "dd0c847a5e8944d76e92628838dd4abc452cf8ecc7ce1808f0c52ce4e2201ac4",
-  "mac_x64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.2.0/Hush_1.2.0_x64.dmg",
-  "mac_x64_sha256": "acd8c06d3233ef2729908e14ef1008dd386add457ed27f15da026f9a87910ae5"
+  "mac_arm64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.3.0/Hush_1.3.0_aarch64.dmg",
+  "mac_arm64_sha256": "8f94d8a6f541e269ebf3dee97487ae7f40cba050457d9fe3ab2a54cfd318e488",
+  "mac_x64_url": "https://github.com/ShashankH1323/hush-web/releases/download/v1.3.0/Hush_1.3.0_x64.dmg",
+  "mac_x64_sha256": "3f3479053cb0377683bdd3d3c67624e8a53a98dacd4842db3ffffa1602850325"
 }
